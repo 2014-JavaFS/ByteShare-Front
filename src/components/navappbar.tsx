@@ -10,52 +10,111 @@ import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import { Divider, Drawer, Input, List, ListItem } from "@mui/material";
+import { Divider, Drawer, Input, List, ListItemButton } from "@mui/material";
 import { NavLink, useNavigate } from "react-router-dom";
 import React from "react";
+import { useTheme } from "@mui/material/styles";
+import LoginIcon from "@mui/icons-material/Login";
 
-const badge = "byteshare";
-
-//#region Styling
-//allows styling from theme attributes, applies to a div element
-const Search = styled("div")(({ theme }) => ({
-  position: "relative",
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
-  [theme.breakpoints.up("xs")]: {
-    marginLeft: theme.spacing(3),
-    width: "auto",
-  },
-  flexGrow: 1,
-}));
-
-const StyledInput = styled(Input)(({ theme }) => ({
-  color: "inherit",
-  "& .MuiInput-input": {
-    padding: theme.spacing(1, 1, 1, 5),
-    flexGrow: 1,
-  },
-}));
-
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 1),
-  height: "100%",
-  position: "absolute",
-  display: "flex",
-  alignItems: "center",
-}));
-//#endregion
+const badge = "🔫";
 
 export default function PrimarySearchAppBar() {
-  const navigate = useNavigate(); 
+  //getting them from provider
+  const theme = useTheme();
+  //getting a navigate hook to go between routes
+  const navigate = useNavigate();
+
+  //#region drawer
+  //state for menu drawer
+  const [drawerOpen, setDrawerOpen] = React.useState(false);
+  function handleDrawerToggle() {
+    setDrawerOpen(!drawerOpen);
+  }
+
+  const drawer = (
+    <Drawer open={drawerOpen} onClose={handleDrawerToggle}>
+      <Box onClick={handleDrawerToggle}>
+        <Typography variant="h4" sx={{ my: 2, px: 1 }}>
+          ByteShare
+        </Typography>
+        <Divider />
+        <List>
+          <ListItemButton onClick={() => navigate("1")}>Goto 1</ListItemButton>
+          <ListItemButton onClick={() => navigate("2")}>Goto 2</ListItemButton>
+          <ListItemButton onClick={() => navigate("3")}>Goto 3</ListItemButton>
+          <ListItemButton onClick={() => navigate("4")}>Goto 4</ListItemButton>
+          <Divider />
+          {/*<ListItemButton onClick={() => logout()}>Goto 4</ListItemButton>*/}
+          <ListItemButton onClick={toggleLogin}>Logout</ListItemButton>
+        </List>
+      </Box>
+    </Drawer>
+  );
+  //#endregion
+
+  //#region searchbar
+
+  //allows styling from theme attributes, modifying an element or component
+  const Search = styled("div")(() => ({
+    position: "relative",
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: alpha(theme.palette.common.white, 0.15),
+    "&:hover": {
+      backgroundColor: alpha(theme.palette.common.white, 0.25),
+    },
+    marginRight: theme.spacing(2),
+    marginLeft: 0,
+    [theme.breakpoints.up("xs")]: {
+      marginLeft: theme.spacing(3),
+      width: "auto",
+    },
+    flexGrow: 1,
+  }));
+
+  const StyledInput = styled(Input)(() => ({
+    color: "inherit",
+    "& .MuiInput-input": {
+      padding: theme.spacing(1, 1, 1, 5),
+      flexGrow: 1,
+    },
+  }));
+
+  const SearchIconWrapper = styled("div")(() => ({
+    padding: theme.spacing(0, 1),
+    height: "100%",
+    position: "absolute",
+    display: "flex",
+    alignItems: "center",
+  }));
+
+  //combines all the pieces of the styled components
+  const searchBar = (
+    <Search>
+      <SearchIconWrapper>
+        <SearchIcon />
+      </SearchIconWrapper>
+      <StyledInput
+        placeholder="Search…"
+        type="search"
+        onChange={handleSearch}
+        fullWidth
+      />
+    </Search>
+  );
 
   function handleSearch(event) {
-    console.log("event value: " + event.target.value);
+    console.log("search input: " + event.target.value);
+  }
+
+  //#endregion
+
+  //#region usermenu (title is wip)
+
+  //state for determining if logged in
+  //FIXME: this should probably be handled differently, this was mostly a proof of concept
+  const [login, setLogin] = React.useState(false);
+  function toggleLogin() {
+    setLogin(!login);
   }
 
   function handleNewPostClick() {
@@ -71,48 +130,62 @@ export default function PrimarySearchAppBar() {
     console.log("Profile");
   }
 
-  //#region drawer
+  function handleLoginClick() {
+    //navigate("/login");
+    toggleLogin();
+    console.log("Login");
+  }
 
-  //hardcoded rn, was easier for testing
-  const navItems = [
-    <ListItem>
-      <NavLink to="1">
-        <Typography sx={{ color: "black" }}>something 1</Typography>
-      </NavLink>
-    </ListItem>,
-    <ListItem>
-      <NavLink to="2">
-        <Typography sx={{ color: "black" }}>something 2</Typography>
-      </NavLink>
-    </ListItem>,
-    <ListItem>
-      <NavLink to="3">
-        <Typography sx={{ color: "black" }}>something 3</Typography>
-      </NavLink>
-    </ListItem>,
-    <ListItem>
-      <NavLink to="4">
-        <Typography sx={{ color: "black" }}>something 4</Typography>
-      </NavLink>
-    </ListItem>,
-  ];
+  //if logged out, only shows login button,
+  //but if logged in, shows available options
+  const userMenu = login ? (
+    <Box>
+      <IconButton onClick={handleNewPostClick} sx={{ ml: 1 }}>
+        <AddCircleIcon />
+      </IconButton>
+      <IconButton onClick={handleFollowingClick} sx={{ ml: 1 }}>
+        <Badge badgeContent={badge} color="info">
+          <MailIcon />
+        </Badge>
+      </IconButton>
+      <IconButton onClick={handleProfileClick} edge="end" sx={{ ml: 1 }}>
+        <AccountCircle />
+      </IconButton>
+    </Box>
+  ) : (
+    <Box>
+      <IconButton onClick={handleLoginClick} edge="end" sx={{ ml: 1 }}>
+        <LoginIcon />
+      </IconButton>
+    </Box>
+  );
 
-  const [drawerOpen, setDrawerOpen] = React.useState(false);
+  //#endregion
 
-  const handleDrawerToggle = () => {
-    setDrawerOpen((prevState) => !prevState);
-  };
-
-  const drawer = (
-    <Drawer open={drawerOpen} onClose={handleDrawerToggle}>
-      <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
-        <Typography variant="h4" sx={{ my: 2, color: "black", px: 1 }}>
+  //#region titleLink
+  const titleLink = (
+    <Box sx={{ pl: 1 }}>
+      <NavLink to="/">
+        <Typography
+          variant="h2"
+          sx={{
+            display: { xs: "none", sm: "block" },
+            color: "#121212",
+          }}
+        >
           ByteShare
         </Typography>
-        <Divider />
-        <List>{navItems}</List>
-      </Box>
-    </Drawer>
+        <Typography
+          variant="h4"
+          sx={{
+            display: { xs: "block", sm: "none" },
+            color: "#121212",
+          }}
+        >
+          ByteShare
+        </Typography>
+      </NavLink>
+    </Box>
   );
   //#endregion
 
@@ -123,64 +196,11 @@ export default function PrimarySearchAppBar() {
         <IconButton size="large" edge="start" onClick={handleDrawerToggle}>
           <MenuIcon />
         </IconButton>
-        <Divider
-          orientation="vertical"
-          variant="middle"
-          flexItem
-          sx={{ mx: 1 }}
-        />
-        <NavLink to="/">
-          <Typography
-            variant="h2"
-            sx={{
-              display: { xs: "none", sm: "none", md: "block" },
-              color: "black",
-            }}
-          >
-            ByteShare
-          </Typography>
-          <Typography
-            variant="h3"
-            sx={{ display: { xs: "none", sm: "block", md: "none" } }}
-          >
-            ByteShare
-          </Typography>
-          <Typography
-            variant="h4"
-            sx={{ display: { xs: "block", sm: "none", md: "none" } }}
-          >
-            ByteShare
-          </Typography>
-        </NavLink>
-        <Search>
-          <SearchIconWrapper>
-            <SearchIcon />
-          </SearchIconWrapper>
-          <StyledInput
-            placeholder="Search…"
-            type="search"
-            onChange={handleSearch}
-            fullWidth
-          />
-        </Search>
         <Divider orientation="vertical" variant="middle" flexItem />
-        <Box>
-          <IconButton size="large" onClick={handleNewPostClick} sx={{ ml: 1 }}>
-            <AddCircleIcon />
-          </IconButton>
-          <IconButton
-            size="large"
-            onClick={handleFollowingClick}
-            sx={{ mx: 1 }}
-          >
-            <Badge badgeContent={badge} color="info">
-              <MailIcon />
-            </Badge>
-          </IconButton>
-          <IconButton size="large" onClick={handleProfileClick} edge="end">
-            <AccountCircle />
-          </IconButton>
-        </Box>
+        {titleLink}
+        {searchBar}
+        <Divider orientation="vertical" variant="middle" flexItem />
+        {userMenu}
       </Toolbar>
     </AppBar>
   );

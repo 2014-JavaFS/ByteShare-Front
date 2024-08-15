@@ -19,10 +19,10 @@ export default function App() {
             <Route path="/" element={<Layout />}>
               <Route index element={<Home />} />
               <Route path="profile" element={<Profile />} />
-              <Route path="1" element={<TestBlock props={1} />} />
-              <Route path="2" element={<TestBlock props={2} />} />
-              <Route path="3" element={<TestBlock props={3} />} />
-              <Route path="4" element={<TestBlock props={4} />} />
+              <Route path="1" element={<TestBlock num={1} />} />
+              <Route path="2" element={<TestBlock num={2} />} />
+              <Route path="3" element={<TestBlock num={3} />} />
+              <Route path="4" element={<TestBlock num={4} />} />
             </Route>
           </Routes>
         </BrowserRouter>
