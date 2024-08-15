@@ -1,10 +1,35 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import App from './App.tsx'
-import './index.css'
+import "./index.css";
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import TestBlock from "./components/test.tsx";
+import ReactDOM from "react-dom/client";
+import Layout from "./pages/layout.tsx";
+import Home from "./pages/home.tsx";
+import { CssBaseline, ThemeProvider } from "@mui/material";
+import theme from "./theme.ts";
+import Profile from "./pages/profile.tsx";
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-)
+export default function App() {
+  return (
+    <React.StrictMode>
+      <ThemeProvider theme={theme}>
+        <BrowserRouter>
+          <CssBaseline enableColorScheme />
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<Home />} />
+              <Route path="profile" element={<Profile />} />
+              <Route path="1" element={<TestBlock props={1} />} />
+              <Route path="2" element={<TestBlock props={2} />} />
+              <Route path="3" element={<TestBlock props={3} />} />
+              <Route path="4" element={<TestBlock props={4} />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </ThemeProvider>
+    </React.StrictMode>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<App />);
