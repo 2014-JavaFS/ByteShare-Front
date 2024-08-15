@@ -14,7 +14,7 @@ import { Divider, Drawer, Input, List, ListItem } from "@mui/material";
 import { NavLink, useNavigate } from "react-router-dom";
 import React from "react";
 
-const badge = "🔫";
+const badge = "byteshare";
 
 //#region Styling
 //allows styling from theme attributes, applies to a div element
