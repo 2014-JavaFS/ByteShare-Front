@@ -16,6 +16,7 @@ import {
   Input,
   List,
   ListItemButton,
+  Stack,
 } from "@mui/material";
 import { NavLink, useNavigate } from "react-router-dom";
 import React from "react";
@@ -109,6 +110,7 @@ export default function PrimarySearchAppBar() {
 
   //combines all the pieces of the styled components
   const searchBar = (
+    <Stack >
     <Search>
       <SearchIconWrapper>
         <SearchIcon />
@@ -116,10 +118,12 @@ export default function PrimarySearchAppBar() {
       <StyledInput
         placeholder="Search…"
         type="search"
-        onChange={handleSearch}
+        onKeyDown={(e) => {if(e.key==="Enter")
+          handleSearch(e);}}
         fullWidth
       />
-    </Search>
+    </Search> 
+    </Stack>
   );
 
   function handleSearch(event) {
