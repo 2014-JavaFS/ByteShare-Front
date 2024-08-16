@@ -6,8 +6,7 @@ import ReactDOM from "react-dom/client";
 import Layout from "./pages/layout.tsx";
 import Home from "./pages/home.tsx";
 import { CssBaseline, ThemeProvider } from "@mui/material";
-import theme from "./theme.ts";
-import Profile from "./pages/profile.tsx";
+import theme from "./theme.ts"; 
 
 export default function App() {
   return (
@@ -18,11 +17,13 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Layout />}>
               <Route index element={<Home />} />
-              <Route path="profile" element={<Profile />} />
-              <Route path="1" element={<TestBlock props={1} />} />
-              <Route path="2" element={<TestBlock props={2} />} />
-              <Route path="3" element={<TestBlock props={3} />} />
-              <Route path="4" element={<TestBlock props={4} />} />
+              <Route path="profile" element={<TestBlock props={{num:1,title:"Profile"}} />} />
+              <Route path="1" element={<TestBlock props={{num:1,title:"1"}} />} />
+              <Route path="2" element={<TestBlock props={{num:2,title:"2"}} />} />
+              <Route path="3" element={<TestBlock props={{num:3,title:"3"}} />} />
+              <Route path="4" element={<TestBlock props={{num:4,title:"4"}} />} />
+              <Route path="newpost" element={<TestBlock props={{num:1,title:"New Post"}} />} />
+              <Route path="following" element={<TestBlock props={{num:1,title:"Following"}} />} />
             </Route>
           </Routes>
         </BrowserRouter>
