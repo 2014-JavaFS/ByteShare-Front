@@ -14,6 +14,7 @@ const theme = createTheme({
     },
     background: {
       default: "#232323",
+      paper: colors.green[400],
     },
     info: {
       main: colors.lightGreen[300],
@@ -26,7 +27,7 @@ const theme = createTheme({
     h2: {
       fontWeight: 300,
     },
-    h4: {
+    h3: {
       fontWeight: 300,
     },
   },

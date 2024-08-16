@@ -2,7 +2,6 @@ import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Badge from "@mui/material/Badge";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -10,17 +9,23 @@ import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import { Divider, Drawer, Input, List, ListItemButton } from "@mui/material";
+import {
+  Divider,
+  Drawer,
+  IconButton,
+  Input,
+  List,
+  ListItemButton,
+} from "@mui/material";
 import { NavLink, useNavigate } from "react-router-dom";
 import React from "react";
 import { useTheme } from "@mui/material/styles";
 import LoginIcon from "@mui/icons-material/Login";
 
 const badge = "🔫";
+const initLogin = true;
 
 export default function PrimarySearchAppBar() {
-  //getting them from provider
-  const theme = useTheme();
   //getting a navigate hook to go between routes
   const navigate = useNavigate();
 
@@ -32,28 +37,48 @@ export default function PrimarySearchAppBar() {
   }
 
   const drawer = (
-    <Drawer open={drawerOpen} onClose={handleDrawerToggle}>
-      <Box onClick={handleDrawerToggle}>
-        <Typography variant="h4" sx={{ my: 2, px: 1 }}>
-          ByteShare
-        </Typography>
-        <Divider />
-        <List>
-          <ListItemButton onClick={() => navigate("1")}>Goto 1</ListItemButton>
-          <ListItemButton onClick={() => navigate("2")}>Goto 2</ListItemButton>
-          <ListItemButton onClick={() => navigate("3")}>Goto 3</ListItemButton>
-          <ListItemButton onClick={() => navigate("4")}>Goto 4</ListItemButton>
+    <Box>
+      <IconButton
+        size="large"
+        edge="start"
+        onClick={handleDrawerToggle}
+        sx={{ mr: 1 }}
+      >
+        <MenuIcon />
+      </IconButton>
+      <Drawer open={drawerOpen} onClose={handleDrawerToggle}>
+        <Box onClick={handleDrawerToggle}>
+          <Typography variant="h4" sx={{ my: 2, px: 1 }}>
+            ByteShare
+          </Typography>
           <Divider />
-          {/*<ListItemButton onClick={() => logout()}>Goto 4</ListItemButton>*/}
-          <ListItemButton onClick={toggleLogin}>Logout</ListItemButton>
-        </List>
-      </Box>
-    </Drawer>
+          <List>
+            <ListItemButton onClick={() => navigate("1")}>
+              Goto 1
+            </ListItemButton>
+            <ListItemButton onClick={() => navigate("2")}>
+              Goto 2
+            </ListItemButton>
+            <ListItemButton onClick={() => navigate("3")}>
+              Goto 3
+            </ListItemButton>
+            <ListItemButton onClick={() => navigate("4")}>
+              Goto 4
+            </ListItemButton>
+            <Divider />
+            {/*<ListItemButton onClick={() => logout()}>Logout</ListItemButton>*/}
+            <ListItemButton onClick={toggleLogin}>Logout</ListItemButton>
+          </List>
+        </Box>
+      </Drawer>
+    </Box>
   );
   //#endregion
 
   //#region searchbar
 
+  //getting them from provider
+  const theme = useTheme();
   //allows styling from theme attributes, modifying an element or component
   const Search = styled("div")(() => ({
     position: "relative",
@@ -98,6 +123,7 @@ export default function PrimarySearchAppBar() {
         type="search"
         onChange={handleSearch}
         fullWidth
+        autoFocus
       />
     </Search>
   );
@@ -112,24 +138,10 @@ export default function PrimarySearchAppBar() {
 
   //state for determining if logged in
   //FIXME: this should probably be handled differently, this was mostly a proof of concept
-  const [login, setLogin] = React.useState(false);
+  const [login, setLogin] = React.useState(initLogin);
   function toggleLogin() {
     setLogin(!login);
   }
-
-  function handleNewPostClick() {
-    console.log("New Post");
-  }
-
-  function handleFollowingClick() {
-    console.log("Following");
-  }
-
-  function handleProfileClick() {
-    navigate("/profile");
-    console.log("Profile");
-  }
-
   function handleLoginClick() {
     //navigate("/login");
     toggleLogin();
@@ -140,15 +152,31 @@ export default function PrimarySearchAppBar() {
   //but if logged in, shows available options
   const userMenu = login ? (
     <Box>
-      <IconButton onClick={handleNewPostClick} sx={{ ml: 1 }}>
+      <IconButton
+        onClick={() => {
+          navigate("/newpost");
+        }}
+        sx={{ ml: 1 }}
+      >
         <AddCircleIcon />
       </IconButton>
-      <IconButton onClick={handleFollowingClick} sx={{ ml: 1 }}>
+      <IconButton
+        onClick={() => {
+          navigate("/following");
+        }}
+        sx={{ ml: 1 }}
+      >
         <Badge badgeContent={badge} color="info">
           <MailIcon />
         </Badge>
       </IconButton>
-      <IconButton onClick={handleProfileClick} edge="end" sx={{ ml: 1 }}>
+      <IconButton
+        onClick={() => {
+          navigate("/profile");
+        }}
+        edge="end"
+        sx={{ ml: 1 }}
+      >
         <AccountCircle />
       </IconButton>
     </Box>
@@ -176,7 +204,7 @@ export default function PrimarySearchAppBar() {
           ByteShare
         </Typography>
         <Typography
-          variant="h4"
+          variant="h3"
           sx={{
             display: { xs: "block", sm: "none" },
             color: "#121212",
@@ -191,11 +219,8 @@ export default function PrimarySearchAppBar() {
 
   return (
     <AppBar sx={{ py: 1 }}>
-      {drawer}
       <Toolbar>
-        <IconButton size="large" edge="start" onClick={handleDrawerToggle}>
-          <MenuIcon />
-        </IconButton>
+        {drawer}
         <Divider orientation="vertical" variant="middle" flexItem />
         {titleLink}
         {searchBar}

@@ -1,23 +1,40 @@
-import { Typography, Card, Container } from "@mui/material";
-import { green } from "@mui/material/colors";
+import { Typography, Card, Grid, Divider } from "@mui/material";
 
 export default function Home() {
-  return ( 
+  //ignore this
+  const loremIpsum =
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enimad minim veniam, quis nostrud exercitation ullamco laboris nisi utaliquip ex ea commodo consequat. Duis aute irure dolor inreprehenderit in voluptate velit esse cillum dolore eu fugiat nullapariatur. Excepteur sint occaecat cupidatat non proident, sunt inculpa qui officia deserunt mollit anim id est laborum.";
+
+  const textCard = (
+    <Card
+      sx={{
+        width: "80%",
+        p: 5,
+        m: 4,
+      }}
+    >
+      <Typography variant="h2" align="center">
+        Home Page
+      </Typography>
+      <Divider sx={{ my: 2 }} />
+      <Typography align="justify">
+        {loremIpsum} {loremIpsum} {loremIpsum} {loremIpsum}
+      </Typography>
+    </Card>
+  );
+
+  return (
     <>
-      <Container sx={{ m: 25 }}>
-        <Card sx={{ backgroundColor: green[400], width: "auto" }}>
-          <Typography variant="h1">Home Page</Typography>
-          <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
-          </Typography>
-        </Card>
-      </Container>
+      <Grid
+        container
+        spacing={0}
+        direction="column"
+        alignItems="center"
+        minWidth={"500px"}
+      >
+        <Divider sx={{ m: 6 }} />
+        {textCard}
+      </Grid>
     </>
-  ); 
+  );
 }
