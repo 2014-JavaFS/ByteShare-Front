@@ -16,7 +16,6 @@ import {
   Input,
   List,
   ListItemButton,
-  Stack,
 } from "@mui/material";
 import { NavLink, useNavigate } from "react-router-dom";
 import React from "react";
@@ -109,8 +108,7 @@ export default function PrimarySearchAppBar() {
   }));
 
   //combines all the pieces of the styled components
-  const searchBar = (
-    <Stack >
+  const searchBar = ( 
     <Search>
       <SearchIconWrapper>
         <SearchIcon />
@@ -122,8 +120,7 @@ export default function PrimarySearchAppBar() {
           handleSearch(e);}}
         fullWidth
       />
-    </Search> 
-    </Stack>
+    </Search>  
   );
 
   function handleSearch(event) {
