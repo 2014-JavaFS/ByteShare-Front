@@ -38,12 +38,7 @@ export default function PrimarySearchAppBar() {
 
   const drawer = (
     <Box>
-      <IconButton
-        size="large"
-        edge="start"
-        onClick={handleDrawerToggle}
-        sx={{ mr: 1 }}
-      >
+      <IconButton size="large" edge="start" onClick={handleDrawerToggle}>
         <MenuIcon />
       </IconButton>
       <Drawer open={drawerOpen} onClose={handleDrawerToggle}>
@@ -123,7 +118,6 @@ export default function PrimarySearchAppBar() {
         type="search"
         onChange={handleSearch}
         fullWidth
-        autoFocus
       />
     </Search>
   );
@@ -156,7 +150,7 @@ export default function PrimarySearchAppBar() {
         onClick={() => {
           navigate("/newpost");
         }}
-        sx={{ ml: 1 }}
+        size="large"
       >
         <AddCircleIcon />
       </IconButton>
@@ -164,7 +158,8 @@ export default function PrimarySearchAppBar() {
         onClick={() => {
           navigate("/following");
         }}
-        sx={{ ml: 1 }}
+        size="large"
+        sx={{ mx: 1 }}
       >
         <Badge badgeContent={badge} color="info">
           <MailIcon />
@@ -174,15 +169,15 @@ export default function PrimarySearchAppBar() {
         onClick={() => {
           navigate("/profile");
         }}
+        size="large"
         edge="end"
-        sx={{ ml: 1 }}
       >
         <AccountCircle />
       </IconButton>
     </Box>
   ) : (
     <Box>
-      <IconButton onClick={handleLoginClick} edge="end" sx={{ ml: 1 }}>
+      <IconButton onClick={handleLoginClick} edge="end" size="large">
         <LoginIcon />
       </IconButton>
     </Box>
@@ -192,7 +187,7 @@ export default function PrimarySearchAppBar() {
 
   //#region titleLink
   const titleLink = (
-    <Box sx={{ pl: 1 }}>
+    <Box>
       <NavLink to="/">
         <Typography
           variant="h2"
@@ -221,10 +216,20 @@ export default function PrimarySearchAppBar() {
     <AppBar sx={{ py: 1 }}>
       <Toolbar>
         {drawer}
-        <Divider orientation="vertical" variant="middle" flexItem />
+        <Divider
+          orientation="vertical"
+          variant="middle"
+          sx={{ mx: 2 }}
+          flexItem
+        />
         {titleLink}
         {searchBar}
-        <Divider orientation="vertical" variant="middle" flexItem />
+        <Divider
+          orientation="vertical"
+          variant="middle"
+          sx={{ mx: 2 }}
+          flexItem
+        />
         {userMenu}
       </Toolbar>
     </AppBar>

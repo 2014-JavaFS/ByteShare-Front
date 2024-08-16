@@ -6,6 +6,7 @@ export default function Layout() {
     <>
       <NavAppBar />
       <Outlet />
+      <img src={"src/assets/legallyRequiredPNG.png"} width="180" />
     </>
   );
 }
