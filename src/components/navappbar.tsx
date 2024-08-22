@@ -23,7 +23,7 @@ import { useTheme } from "@mui/material/styles";
 import LoginIcon from "@mui/icons-material/Login";
 
 const badge = "🔫";
-const initLogin = true;
+const initLogin = false;
 
 export default function PrimarySearchAppBar() {
   //getting a navigate hook to go between routes
@@ -108,7 +108,7 @@ export default function PrimarySearchAppBar() {
   }));
 
   //combines all the pieces of the styled components
-  const searchBar = ( 
+  const searchBar = (
     <Search>
       <SearchIconWrapper>
         <SearchIcon />
@@ -116,11 +116,12 @@ export default function PrimarySearchAppBar() {
       <StyledInput
         placeholder="Search…"
         type="search"
-        onKeyDown={(e) => {if(e.key==="Enter")
-          handleSearch(e);}}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") handleSearch(e);
+        }}
         fullWidth
       />
-    </Search>  
+    </Search>
   );
 
   function handleSearch(event) {
@@ -129,7 +130,7 @@ export default function PrimarySearchAppBar() {
 
   //#endregion
 
-  //#region usermenu (title is wip)
+  //#region usermenu
 
   //state for determining if logged in
   //FIXME: this should probably be handled differently, this was mostly a proof of concept
