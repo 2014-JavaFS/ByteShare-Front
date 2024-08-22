@@ -16,6 +16,7 @@ import {
   Input,
   List,
   ListItemButton,
+  Tooltip,
 } from "@mui/material";
 import { NavLink, useNavigate } from "react-router-dom";
 import React from "react";
@@ -148,40 +149,48 @@ export default function PrimarySearchAppBar() {
   //but if logged in, shows available options
   const userMenu = login ? (
     <Box>
-      <IconButton
-        onClick={() => {
-          navigate("/newpost");
-        }}
-        size="large"
-      >
-        <AddCircleIcon />
-      </IconButton>
-      <IconButton
-        onClick={() => {
-          navigate("/following");
-        }}
-        size="large"
-        sx={{ mx: 1 }}
-      >
-        <Badge badgeContent={badge} color="info">
-          <MailIcon />
-        </Badge>
-      </IconButton>
-      <IconButton
-        onClick={() => {
-          navigate("/profile");
-        }}
-        size="large"
-        edge="end"
-      >
-        <AccountCircle />
-      </IconButton>
+      <Tooltip title={"Create New Post"} arrow>
+        <IconButton
+          onClick={() => {
+            navigate("/newpost");
+          }}
+          size="large"
+        >
+          <AddCircleIcon />
+        </IconButton>
+      </Tooltip>
+      <Tooltip title={"Following"} arrow>
+        <IconButton
+          onClick={() => {
+            navigate("/following");
+          }}
+          size="large"
+          sx={{ mx: 1 }}
+        >
+          <Badge badgeContent={badge} color="info">
+            <MailIcon />
+          </Badge>
+        </IconButton>
+      </Tooltip>
+      <Tooltip title={"Profile"} arrow>
+        <IconButton
+          onClick={() => {
+            navigate("/profile");
+          }}
+          size="large"
+          edge="end"
+        >
+          <AccountCircle />
+        </IconButton>
+      </Tooltip>
     </Box>
   ) : (
     <Box>
-      <IconButton onClick={handleLoginClick} edge="end" size="large">
-        <LoginIcon />
-      </IconButton>
+      <Tooltip title={"Login"} arrow>
+        <IconButton onClick={handleLoginClick} edge="end" size="large">
+          <LoginIcon />
+        </IconButton>
+      </Tooltip>
     </Box>
   );
 
