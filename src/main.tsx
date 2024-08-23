@@ -21,7 +21,7 @@ export default function App() {
               <Route path="1" element={<TestBlock props={{num:1,title:"1"}} />} />
               <Route path="2" element={<TestBlock props={{num:2,title:"2"}} />} />
               <Route path="3" element={<TestBlock props={{num:3,title:"3"}} />} />
-              <Route path="4" element={<TestBlock props={{num:4,title:"4"}} />} />
+              <Route path="recipe" element={{/*PUT YOUR COMPONENT HERE*/}} />
               <Route path="newpost" element={<TestBlock props={{num:1,title:"New Post"}} />} />
               <Route path="following" element={<TestBlock props={{num:1,title:"Following"}} />} />
             </Route>
