@@ -1,4 +1,4 @@
-import { styled, alpha } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -79,10 +79,7 @@ export default function PrimarySearchAppBar() {
   const Search = styled("div")(() => ({
     position: "relative",
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
-    "&:hover": {
-      backgroundColor: alpha(theme.palette.common.white, 0.25),
-    },
+    backgroundColor: "#FFFFFF22", 
     marginRight: theme.spacing(2),
     marginLeft: 0,
     [theme.breakpoints.up("xs")]: {
