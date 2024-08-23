@@ -10,7 +10,7 @@ pipeline{
         dockerHub = credentials('dockerHub')
 
         // Custom Variables for this Jenkinsfile only
-        SERVICE = "ams-frontend" // #CHECK CONFIG
+        SERVICE = "byteshare-frontend" // #CHECK CONFIG
         VERSION = "${env.BUILD_ID}"
         IMAGE = "${dockerHub_USR}/${SERVICE}:${VERSION}"
         CONTAINER = "${SERVICE}-service" 
