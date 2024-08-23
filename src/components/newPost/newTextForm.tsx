@@ -1,9 +1,10 @@
-import { Grid, TextField, Button } from "@mui/material";
+import { Grid, TextField, Button, Typography } from "@mui/material";
 import { useState } from "react";
 
-export default function PostTextForm({ props }) {
+export default function NewTextForm({ setRecipeText }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [unsavedChanges, setUnsavedChanges] = useState(false);
 
   const handleSubmitText = (event) => {
     //default behavior reloads the whole page
@@ -15,7 +16,18 @@ export default function PostTextForm({ props }) {
     };
 
     console.log(JSON.stringify(recipe));
-    props.setRecipeText(recipe);
+    setRecipeText(recipe);
+    setUnsavedChanges(false);
+  };
+
+  const handleUpdateTitle = (event) => {
+    setTitle(event.target.value);
+    setUnsavedChanges(true);
+  };
+
+  const handleUpdateDescription = (event) => {
+    setDescription(event.target.value);
+    setUnsavedChanges(true);
   };
 
   return (
@@ -23,15 +35,16 @@ export default function PostTextForm({ props }) {
       <form autoComplete="off" onSubmit={handleSubmitText}>
         <TextField
           label="Title"
-          onChange={(e) => setTitle(e.target.value)}
+          value={title}
+          onChange={(e) => handleUpdateTitle(e)}
           required
           color="secondary"
           sx={{ width: "60%", mb: 3 }}
-          value={title}
         />
         <TextField
           label="Description"
-          onChange={(e) => setDescription(e.target.value)}
+          value={description}
+          onChange={(e) => handleUpdateDescription(e)}
           required
           multiline
           rows={4}
@@ -39,11 +52,18 @@ export default function PostTextForm({ props }) {
           variant="filled"
           fullWidth
           sx={{ mb: 2 }}
-          value={description}
         />
         <Button type="submit" color="secondary" size="large" variant="outlined">
           Save Title and Description
         </Button>
+        <br />
+        {unsavedChanges ? (
+          <Typography variant="caption" color="secondary">
+            You have unsaved changes to your Title and/or Description!
+          </Typography>
+        ) : (
+          <></>
+        )}
       </form>
     </Grid>
   );
