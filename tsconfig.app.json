@@ -18,7 +18,11 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+
+    /* Configured (Anything beyond default) */
+    "strictNullChecks": false,
+    "noImplicitAny": false
   },
   "include": ["src"]
 }
