@@ -7,19 +7,24 @@ import * as colors from "@mui/material/colors";
 const theme = createTheme({
   palette: {
     primary: {
-      main: colors.green[500],
+      main: colors.lightGreen[800],
+      contrastText: "#333333",
     },
     secondary: {
-      main: colors.blueGrey[100],
-    },
-    background: {
-      default: "#232323",
-    },
+      main: "#302020",
+      contrastText: "#302020",
+    }, 
     info: {
       main: colors.brown[300],
     },
+    success: {
+      main: "#555555",
+    },
     text: {
-      primary: "#121212",
+      primary: "#00000099",
+    },
+    background: {
+      default: "#232323",
     },
   },
   typography: {
@@ -49,7 +54,7 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           backgroundColor: colors.blueGrey[900],
-          color: "#cdcdcd", 
+          color: "#cdcdcd",
         },
       },
     },
