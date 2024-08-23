@@ -7,17 +7,16 @@ import * as colors from "@mui/material/colors";
 const theme = createTheme({
   palette: {
     primary: {
-      main: colors.green[400],
+      main: colors.green[500],
     },
     secondary: {
-      main: colors.grey[100],
+      main: colors.blueGrey[100],
     },
     background: {
       default: "#232323",
-      paper: colors.green[400],
     },
     info: {
-      main: colors.lightGreen[300],
+      main: colors.brown[300],
     },
     text: {
       primary: "#121212",
@@ -35,7 +34,22 @@ const theme = createTheme({
     MuiDrawer: {
       styleOverrides: {
         paper: {
-          backgroundColor: colors.green[400],
+          backgroundColor: colors.green[500],
+        },
+      },
+    },
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          backgroundColor: colors.blueGrey[600],
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          backgroundColor: colors.blueGrey[900],
+          color: "#cdcdcd", 
         },
       },
     },
