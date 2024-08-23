@@ -4,7 +4,9 @@ import {
   Divider,
   Grid,
   IconButton,
+  Paper,
   Stack,
+  styled,
   TextField,
   Tooltip,
   Typography,
@@ -12,6 +14,7 @@ import {
 import { useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import PostTextForm from "../components/newPostTextForm";
+import React from "react";
 
 export default function NewPostForm() {
   const [recipeText, setRecipeText] = useState("");
@@ -99,12 +102,27 @@ export default function NewPostForm() {
   const [tag, setTag] = useState("");
   const [tags, setTags] = useState([]);
 
+  // TODO: Probably need to make this into a grid but the idea of the tags is working now but just with a list
   const handleTagSubmit = (event) => {
     //default behavior reloads the whole page
     event.preventDefault();
     setTags([...tags, tag]);
-    console.log(tag);
+   
+    const newList = list.concat({tag});
+
+    setList(newList);
+    console.log(newList);
+    setTag("");
   };
+  const [list, setList] = React.useState([]);
+
+  const List = ({ list }) => (
+    <ul>
+      {list.map((item) => (
+        <li key={item.id}>{item.tag}</li>
+      ))}
+    </ul>
+  );
 
   const tagAdding = (
     <Grid item xs={12}>
@@ -117,9 +135,10 @@ export default function NewPostForm() {
           sx={{ width: "30%" }}
         >
           <TextField
-            id="Ingredient"
-            label="Ingredient"
+            id="Tag_Name"
+            label="Tag Name"
             variant="filled"
+            value = {tag}
             onChange={(e) => setTag(e.target.value)}
           />
           <Tooltip title={"Add Tag"} arrow>
@@ -132,13 +151,18 @@ export default function NewPostForm() {
             </IconButton>
           </Tooltip>
         </Stack>
+        {/**this is the secondary stack that will contain all of the made tags */}
+        <div>
+      <List list={list} />
+        </div>
       </form>
     </Grid>
   );
   //#endregion
 
   function handlePostRecipe() {
-
+    // TODO: will need to change this to actually save the list before clearing it
+    setList([]);
   }
 
   return (
