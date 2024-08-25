@@ -36,7 +36,7 @@ export default function LoginForm(){
     return ( 
         <Card sx={{ p: 5, m: 5, width: "100%" }}>
           <Typography variant="h2" align="center">
-            User Registration
+            User Login
           </Typography>
           {error && <div className='error-message'>{error}</div>}
   
