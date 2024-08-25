@@ -25,7 +25,7 @@ export default function RegisterForm(){
             username: username,
             userType: userType
           })
-          if(response.status==HttpStatusCode.Ok){
+          if(response.status==200){
             console.log(response.data.userId)
             navigate('/login')
           }else{

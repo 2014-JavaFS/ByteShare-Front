@@ -18,7 +18,7 @@ export default function LoginForm(){
             email: email,
             password: password
         })
-        if(response.status== HttpStatusCode.Ok){
+        if(response.status== 200){
         
             useLS("jwt",response.data.accessToken)
             const id = loggedInUserId()
