@@ -9,6 +9,7 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import theme from "./theme.ts"; 
 //import NewPost from "./pages/newPost.tsx";
 import NewPostForm from "./pages/newPostForm.tsx";
+import Favorited from "./pages/favorited.tsx";
 
 export default function App() {
   return (
@@ -26,6 +27,7 @@ export default function App() {
               <Route path="4" element={<TestBlock props={{num:4}} />} />
               <Route path="newpost" element={<NewPostForm />} />
               <Route path="following" element={<TestBlock props={{num:1}} />} />
+              <Route path="favorited" element={<Favorited props={{num:2}} />} />
             </Route>
           </Routes>
         </BrowserRouter>
