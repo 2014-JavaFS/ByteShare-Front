@@ -63,9 +63,10 @@ export default function favorited({ props }){
         <Typography variant="body1" align="justify">
           {testOne} {testTwo} {testThree} {testFour}
         </Typography>
-
-        <Typography>{checking.data[0].username}</Typography>
- 
+        {checking.data.map((data) =>
+         <Card sx={{ p: 5, m: 5, width: "100%" }}>
+         <Typography>{data.username}</Typography></Card>
+        ) }
       </Card> 
         <br></br>
         <Card sx={{ p: 5, m: 5, width: "100%" }}>
@@ -77,9 +78,17 @@ export default function favorited({ props }){
 
         <Typography variant="body1" align="justify">
           {checking.data.length}
-          
+
         </Typography> 
       </Card> 
+
+      <br></br>
+      <>
+        {checking.data.map((data) =>
+         <Card sx={{ p: 5, m: 5, width: "100%" }}>
+         <Typography>{data.username}</Typography></Card>
+        ) }
+        </>
       </>
     );
 }
