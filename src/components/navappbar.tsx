@@ -60,6 +60,9 @@ export default function PrimarySearchAppBar() {
             <ListItemButton onClick={() => navigate("4")}>
               Goto 4
             </ListItemButton>
+            <ListItemButton onClick={() => navigate("Recipe")}>
+              Recipe
+            </ListItemButton>
             <Divider />
             {/*<ListItemButton onClick={() => logout()}>Logout</ListItemButton>*/}
             <ListItemButton onClick={toggleLogin}>Logout</ListItemButton>
