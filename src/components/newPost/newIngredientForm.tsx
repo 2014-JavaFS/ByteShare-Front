@@ -1,5 +1,4 @@
 import {
-  Grid,
   Typography,
   Stack,
   TextField,
@@ -31,14 +30,14 @@ const NewIngredientForm: React.FC<NewIngredientFormProps> = ({
     console.log(ingredients);
     console.log(ingredient);
 
-      const protoRecipeIngredient = {
-        amount: amount,
-        unit: unit,
-        ingredient: ingredient,
-      };
+    const protoRecipeIngredient = {
+      amount: amount,
+      unit: unit,
+      ingredient: ingredient,
+    };
 
-      console.log(JSON.stringify(protoRecipeIngredient));
-      setIngredients([...ingredients, protoRecipeIngredient]);
+    console.log(JSON.stringify(protoRecipeIngredient));
+    setIngredients([...ingredients, protoRecipeIngredient]);
 
     setIngredient(null);
     setInputVal("");
@@ -68,68 +67,66 @@ const NewIngredientForm: React.FC<NewIngredientFormProps> = ({
   };
 
   return (
-    <Grid item xs={12}>
+    <form autoComplete="off" onSubmit={handleSubmitIngredient}>
       <Typography variant="subtitle1">Add Your Ingredients:</Typography>
-      <form autoComplete="off" onSubmit={handleSubmitIngredient}>
-        <Stack
-          direction="row"
-          spacing={1}
-          alignItems="center"
-          sx={{ width: "90%", mt: 1 }}
+      <Stack
+        direction="row"
+        spacing={1}
+        alignItems="center"
+        sx={{ width: "90%", mt: 1 }}
+      >
+        <Autocomplete
+          value={ingredient}
+          onChange={(_event, newValue) => {
+            setIngredient(newValue);
+          }}
+          inputValue={inputVal}
+          onInputChange={(_event, newInputValue) => {
+            handleIngredientSearch(newInputValue);
+          }}
+          autoHighlight
+          options={testIngredients}
+          sx={{ width: "100%" }}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Ingredient"
+              color="secondary"
+              required
+            />
+          )}
+        />
+        <TextField
+          label="Amount"
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
+          required
+          color="secondary"
+          sx={{ width: "50%" }}
+        />
+        <TextField
+          label="measurement"
+          value={unit}
+          onChange={(e) => setUnit(e.target.value)}
+          required
+          select
+          SelectProps={{ native: true }}
+          color="secondary"
+          sx={{ width: "40%" }}
         >
-          <Autocomplete
-            value={ingredient}
-            onChange={(_event, newValue) => {
-              setIngredient(newValue);
-            }}
-            inputValue={inputVal}
-            onInputChange={(_event, newInputValue) => {
-              handleIngredientSearch(newInputValue);
-            }}
-            autoHighlight
-            options={testIngredients}
-            sx={{ width: "100%" }}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Ingredient"
-                color="secondary"
-                required
-              />
-            )}
-          />
-          <TextField
-            label="Amount"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            required
-            color="secondary"
-            sx={{ width: "50%" }}
-          />
-          <TextField
-            label="measurement"
-            value={unit}
-            onChange={(e) => setUnit(e.target.value)}
-            required
-            select
-            SelectProps={{ native: true }}
-            color="secondary"
-            sx={{ width: "40%" }}
-          >
-            {measurements.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </TextField>
-          <Tooltip title={"Add Ingredient"} arrow>
-            <IconButton type="submit" size="small">
-              <AddIcon />
-            </IconButton>
-          </Tooltip>
-        </Stack>
-      </form>
-    </Grid>
+          {measurements.map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </TextField>
+        <Tooltip title={"Add Ingredient"} arrow>
+          <IconButton type="submit" size="small">
+            <AddIcon />
+          </IconButton>
+        </Tooltip>
+      </Stack>
+    </form>
   );
 };
 
