@@ -5,35 +5,67 @@ import {
   TextField,
   Tooltip,
   IconButton,
+  Autocomplete,
 } from "@mui/material";
-import { useState } from "react";
+import React, { useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 
-export default function NewIngredientForm({ props }) {
-  const [ingredient, setIngredient] = useState("");
+interface NewIngredientFormProps {
+  ingredients: Array<string>;
+  setIngredients: (Array) => void;
+}
+
+const NewIngredientForm: React.FC<NewIngredientFormProps> = ({
+  ingredients,
+  setIngredients,
+}) => {
   const [unit, setUnit] = useState("quantity");
   const [amount, setAmount] = useState("");
+  const [ingredient, setIngredient] = useState(null);
+  const [inputVal, setInputVal] = useState("");
 
   const handleSubmitIngredient = (event) => {
     //default behavior reloads the whole page
     event.preventDefault();
 
-    const protoRecipeIngredient = {
-      amount: amount,
-      unit: unit,
-      ingredient: ingredient,
-    };
+    console.log(ingredients);
+    console.log(ingredient);
 
-    console.log(JSON.stringify(protoRecipeIngredient));
-    props.setIngredients([...props.ingredients, protoRecipeIngredient]);
+      const protoRecipeIngredient = {
+        amount: amount,
+        unit: unit,
+        ingredient: ingredient,
+      };
+
+      console.log(JSON.stringify(protoRecipeIngredient));
+      setIngredients([...ingredients, protoRecipeIngredient]);
+
+    setIngredient(null);
+    setInputVal("");
+    setAmount("");
+    setUnit("quantity");
   };
 
-  const measurements = [
-    { label: "quantity" },
-    { label: "grams" },
-    { label: "cups" },
-    { label: "tsp" },
+  const measurements = ["quantity", "grams", "cups", "tsp"];
+
+  const testIngredients = [
+    "rice",
+    "chicken",
+    "beef",
+    "pork",
+    "bread",
+    "broccoli",
+    "carrots",
+    "apples",
+    "oranges",
+    "milk",
   ];
+
+  const handleIngredientSearch = (newInputValue) => {
+    console.log("im looking for: " + newInputValue);
+    //update the list of options here
+    setInputVal(newInputValue);
+  };
 
   return (
     <Grid item xs={12}>
@@ -43,16 +75,28 @@ export default function NewIngredientForm({ props }) {
           direction="row"
           spacing={1}
           alignItems="center"
-          sx={{ width: "90%" }}
+          sx={{ width: "90%", mt: 1 }}
         >
-          <TextField
-            label="Ingredient"
+          <Autocomplete
             value={ingredient}
-            onChange={(e) => setIngredient(e.target.value)}
-            required
-            fullWidth
-            variant="filled"
-            color="secondary"
+            onChange={(_event, newValue) => {
+              setIngredient(newValue);
+            }}
+            inputValue={inputVal}
+            onInputChange={(_event, newInputValue) => {
+              handleIngredientSearch(newInputValue);
+            }}
+            autoHighlight
+            options={testIngredients}
+            sx={{ width: "100%" }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Ingredient"
+                color="secondary"
+                required
+              />
+            )}
           />
           <TextField
             label="Amount"
@@ -73,8 +117,8 @@ export default function NewIngredientForm({ props }) {
             sx={{ width: "40%" }}
           >
             {measurements.map((option) => (
-              <option key={option.label} value={option.label}>
-                {option.label}
+              <option key={option} value={option}>
+                {option}
               </option>
             ))}
           </TextField>
@@ -87,4 +131,6 @@ export default function NewIngredientForm({ props }) {
       </form>
     </Grid>
   );
-}
+};
+
+export default NewIngredientForm;

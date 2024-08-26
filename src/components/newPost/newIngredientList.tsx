@@ -16,9 +16,8 @@ export default function NewIngredientList({ props }) {
     <Grid item xs={12}>
       <Stack direction="column">
         {props.ingredients.map((i) => (
-          <Box sx={{ pr: 1, pb: 1 }}>
+          <Box key={i.ingredient} sx={{ pr: 1, pb: 1 }}>
             <Chip
-              key={i.ingredient}
               label={
                 i.amount +
                 (i.unit === "quantity" ? "" : " " + i.unit) +

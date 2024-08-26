@@ -56,14 +56,11 @@ export default function NewTextForm({ setRecipeText }) {
         <Button type="submit" color="secondary" size="large" variant="outlined">
           Save Title and Description
         </Button>
-        <br />
-        {unsavedChanges ? (
-          <Typography variant="caption" color="secondary">
-            You have unsaved changes to your Title and/or Description!
-          </Typography>
-        ) : (
-          <></>
-        )}
+        <Typography variant="caption" color="secondary" sx={{ ml: 2 }}>
+          {unsavedChanges
+            ? "You have unsaved changes to your Title and/or Description!"
+            : ""}
+        </Typography>
       </form>
     </Grid>
   );

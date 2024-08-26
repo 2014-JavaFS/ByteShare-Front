@@ -36,7 +36,8 @@ export default function NewPostForm() {
         </Grid>
 
         <NewPostIngredientForm
-          props={{ ingredients: ingredients, setIngredients: setIngredients }}
+          ingredients={ingredients}
+          setIngredients={setIngredients}
         />
 
         <NewPostIngredientList
@@ -47,7 +48,7 @@ export default function NewPostForm() {
           <Divider sx={{ m: 1 }} />
         </Grid>
 
-        <NewPostTagForm props={{ tags: tags, setTags: setTags  }} />
+        <NewPostTagForm props={{ tags: tags, setTags: setTags }} />
 
         <Grid item xs={12}>
           <Divider sx={{ m: 1 }} />
