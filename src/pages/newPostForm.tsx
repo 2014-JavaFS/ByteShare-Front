@@ -22,13 +22,14 @@ export default function NewPostForm() {
     console.log("tags:\n" + JSON.stringify(tags));
     console.log("=======================");
 
+    //TODO : above this needs to be where the recipe is made and then the id is passed into makeTags()
     makeTags();
   }
 
   async function makeTags(){
-    //hardcoding for now but eventually will need to pass in the created recipe id
+    // TODO : hardcoding for now but eventually will need to pass in the created recipe id
     const recipeId = 1;
-    //making the tagDTO list to be passed to the backend (tag DTO only has a recipe_id and a tag_name)
+    //making the tagDTO list to be passed to the backend (tag DTO only has an Integer:recipeId and a String:tagName)
     const tagDTOs = tags.map(tagName=>{
 
       return {recipeId, tagName};

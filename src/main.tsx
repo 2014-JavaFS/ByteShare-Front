@@ -9,6 +9,9 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import theme from "./theme.ts"; 
 //import NewPost from "./pages/newPost.tsx";
 import NewPostForm from "./pages/newPostForm.tsx";
+import TestTagBlock from "./components/testTagsDisplay.tsx";
+
+const tagArray = [ "dummyTagOne", "dummyTagThree","dummyTagTwo"]
 
 export default function App() {
   return (
@@ -23,7 +26,7 @@ export default function App() {
               <Route path="1" element={<TestBlock props={{num:1}} />} />
               <Route path="2" element={<TestBlock props={{num:2}} />} />
               <Route path="3" element={<TestBlock props={{num:3}} />} />
-              <Route path="4" element={<TestBlock props={{num:4}} />} />
+              <Route path="4" element={<TestTagBlock/>} />
               <Route path="newpost" element={<NewPostForm />} />
               <Route path="following" element={<TestBlock props={{num:1}} />} />
             </Route>
