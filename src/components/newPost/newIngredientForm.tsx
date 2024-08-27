@@ -9,7 +9,6 @@ import {
 import React, {useState} from "react";
 import AddIcon from "@mui/icons-material/Add";
 import axios from "axios";
-import {amsServer} from "../../common/byteshare-server.ts";
 
 interface NewIngredientFormProps {
     ingredients: Array<string>;
