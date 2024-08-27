@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { bsServer } from "../common/byteshare-server";
-import { HttpStatusCode } from "axios";
 import { Card, IconButton, Stack, TextField, Tooltip, Typography } from "@mui/material";
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 
@@ -26,8 +25,8 @@ export default function RegisterForm(){
             userType: userType
           })
           if(response.status==200){
-            console.log(response.data.userId)
-            navigate('/login')
+            console.log(response)
+            navigate("/login")
           }else{
             setError(response.data || 'Registration error, try again with different data')
           }
@@ -36,7 +35,8 @@ export default function RegisterForm(){
           console.log(error)
         }
       }
-    async function handleSubmit() {
+    async function handleSubmit(event) {
+        event.preventDefault()
         postData();
     }
     return ( 
@@ -46,7 +46,7 @@ export default function RegisterForm(){
           </Typography>
           {error && <div className='error-message'>{error}</div>}
   
-          <form autoComplete="off" onSubmit={handleSubmit}>
+          <form autoComplete="off" onSubmit={e=>handleSubmit(e)}>
         <Stack
           direction="row"
           spacing={1}

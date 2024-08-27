@@ -1,7 +1,5 @@
 import { useState } from "react";
 import { bsServer } from "../common/byteshare-server";
-import { HttpStatusCode } from "axios";
-import useLS from "../hooks/useLS";
 import { useNavigate } from "react-router-dom";
 import { Card, Typography, Stack, TextField, Tooltip, IconButton } from "@mui/material";
 import LoginIcon from '@mui/icons-material/Login';
@@ -18,9 +16,10 @@ export default function LoginForm(){
             email: email,
             password: password
         })
+        console.log(response)
         if(response.status== 200){
-        
-            useLS("jwt",response.data.accessToken)
+          
+            localStorage.setItem("jwt",response.data.accessToken)
             const id = loggedInUserId()
             console.log(id)
             navigate("/")
@@ -29,7 +28,8 @@ export default function LoginForm(){
             setError(response.data || 'Invalid credentials')
         }
     }
-    async function handleSubmit() {
+    async function handleSubmit(event) {
+        event.preventDefault()
         postLogin()
 
     }
@@ -40,7 +40,7 @@ export default function LoginForm(){
           </Typography>
           {error && <div className='error-message'>{error}</div>}
   
-          <form autoComplete="off" onSubmit={handleSubmit}>
+          <form autoComplete="off" onSubmit={e =>handleSubmit(e)}>
         <Stack
           direction="row"
           spacing={1}
