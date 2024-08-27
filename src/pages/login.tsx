@@ -22,7 +22,7 @@ export default function LoginForm(){
             localStorage.setItem("jwt",response.data.accessToken)
             const id = loggedInUserId()
             console.log(id)
-            navigate("/")
+            navigate(`/users`, {replace:true}) // takes current path and replaces from base url, otherwise we just keep adding
         }else{
             console.log(response.status)
             setError(response.data || 'Invalid credentials')
