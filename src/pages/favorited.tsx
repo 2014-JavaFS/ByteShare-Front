@@ -3,10 +3,12 @@ import axios from "axios";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
+import { amsServer } from "../common/byteshare-server";
+
 
 export default function favorited({ props }){
 
-    const testOne ="Checking";
+    const testOne ="Checking";  
     const testTwo ="What";
     const testThree="Each";
     const testFour="Does";
@@ -29,6 +31,22 @@ export default function favorited({ props }){
           });
     }   
 
+    async function getFavorites(){
+        amsServer.get('/favorite',
+          {
+            headers: { 
+              'Accept': 'application/json',
+              'userType': 'ADMIN'
+            }
+          })
+          .then((response) => {
+            setChecking(response);
+            //console.log(response.data);
+          }, (error) => {
+            console.log("You Have an Error"+"\n"+error);
+          });
+    }
+
     window.onload = function(){
         testing();
     }
@@ -37,6 +55,7 @@ export default function favorited({ props }){
     //    testing();
     //  }, []);
     
+    //
     if(!checking) return (<Card sx={{ p: 5, m: 5, width: "100%" }}>
         <Typography variant="h2" align="center">
           Recipe Lister Testing
@@ -50,6 +69,8 @@ export default function favorited({ props }){
  
       </Card> );
 
+  //Testing API Implementation In Return Statement
+  /*
     return (
         <>
         
@@ -91,4 +112,23 @@ export default function favorited({ props }){
         </>
       </>
     );
+    */
+   
+   //Actual Return Statement
+    return(
+    <>
+        {checking.data.map((data) =>
+                        <Card sx={{ p: 5, m: 5, width: "100%" }}>
+                          <Typography variant="h2" align="center">
+                            Insert Recipie Name
+                          </Typography>
+                        <Typography>{data.username} Make This a Link?</Typography>
+                        <Typography variant="body1" align="justify">
+                          Insert Description Here
+                        </Typography>
+                        </Card>
+                        ) 
+                    }
+    </>
+   );
 }
