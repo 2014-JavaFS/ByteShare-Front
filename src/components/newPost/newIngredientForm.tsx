@@ -1,6 +1,5 @@
 import {
-    Grid,
-    Typography,
+      Typography,
     Stack,
     TextField,
     Tooltip,
@@ -10,7 +9,6 @@ import {
 import React, {useState} from "react";
 import AddIcon from "@mui/icons-material/Add";
 import axios from "axios";
-import {amsServer} from "../../common/byteshare-server.ts";
 
 interface NewIngredientFormProps {
     ingredients: Array<string>;
@@ -34,11 +32,11 @@ const NewIngredientForm: React.FC<NewIngredientFormProps> = ({
         console.log(ingredients);
         console.log(ingredient);
 
-        const protoRecipeIngredient = {
-            amount: amount,
-            unit: unit,
-            ingredient: ingredient,
-        };
+      const protoRecipeIngredient = {
+          amount: amount,
+          unit: unit,
+          ingredient: ingredient,
+      };
 
         console.log(JSON.stringify(protoRecipeIngredient));
         setIngredients([...ingredients, protoRecipeIngredient]);
@@ -81,70 +79,68 @@ const NewIngredientForm: React.FC<NewIngredientFormProps> = ({
         setInputVal(newInputValue);
     };
 
-    return (
-        <Grid item xs={12}>
-            <Typography variant="subtitle1">Add Your Ingredients:</Typography>
-            <form autoComplete="off" onSubmit={handleSubmitIngredient}>
-                <Stack
-                    direction="row"
-                    spacing={1}
-                    alignItems="center"
-                    sx={{width: "90%", mt: 1}}
-                >
-                    <Autocomplete
-                        value={ingredient}
-                        onChange={(_event, newValue) => {
-                            setIngredient(newValue);
-                        }}
-                        inputValue={inputVal}
-                        onInputChange={(_event, newInputValue) => {
-                            handleIngredientSearch(newInputValue);
-                        }}
-                        autoHighlight
-                        options={autocompleteResults}
-                        sx={{width: "100%"}}
-                        renderInput={(params) => (
-                            <TextField
-                                {...params}
-                                label="Ingredient"
-                                color="secondary"
-                                required
-                            />
-                        )}
-                    />
-                    <TextField
-                        label="Amount"
-                        value={amount}
-                        onChange={(e) => setAmount(e.target.value)}
-                        required
-                        color="secondary"
-                        sx={{width: "50%"}}
-                    />
-                    <TextField
-                        label="measurement"
-                        value={unit}
-                        onChange={(e) => setUnit(e.target.value)}
-                        required
-                        select
-                        SelectProps={{native: true}}
-                        color="secondary"
-                        sx={{width: "40%"}}
-                    >
-                        {measurements.map((option) => (
-                            <option key={option} value={option}>
-                                {option}
-                            </option>
-                        ))}
-                    </TextField>
-                    <Tooltip title={"Add Ingredient"} arrow>
-                        <IconButton type="submit" size="small">
-                            <AddIcon/>
-                        </IconButton>
-                    </Tooltip>
-                </Stack>
-            </form>
-        </Grid>
-    );
+  return (
+      <form autoComplete="off" onSubmit={handleSubmitIngredient}>
+      <Typography variant="subtitle1">Add Your Ingredients:</Typography>
+        <Stack
+          direction="row"
+          spacing={1}
+          alignItems="center"
+          sx={{ width: "90%", mt: 1 }}
+        >
+          <Autocomplete
+            value={ingredient}
+            onChange={(_event, newValue) => {
+              setIngredient(newValue);
+            }}
+            inputValue={inputVal}
+            onInputChange={(_event, newInputValue) => {
+              handleIngredientSearch(newInputValue);
+            }}
+            autoHighlight
+            options={autocompleteResults}
+            sx={{ width: "100%" }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Ingredient"
+                color="secondary"
+                required
+              />
+            )}
+          />
+          <TextField
+            label="Amount"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+            required
+            color="secondary"
+            sx={{ width: "50%" }}
+          />
+          <TextField
+            label="measurement"
+            value={unit}
+            onChange={(e) => setUnit(e.target.value)}
+            required
+            select
+            SelectProps={{ native: true }}
+            color="secondary"
+            sx={{ width: "40%" }}
+          >
+            {measurements.map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
+          </TextField>
+          <Tooltip title={"Add Ingredient"} arrow>
+            <IconButton type="submit" size="small">
+              <AddIcon />
+            </IconButton>
+          </Tooltip>
+        </Stack>
+      </form>
+  );
 };
 
 export default NewIngredientForm;

@@ -1,4 +1,4 @@
-import { Grid, Stack, Chip, Box } from "@mui/material";
+import { Stack, Chip, Box } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 export default function NewTagList({ props }) {
@@ -11,7 +11,6 @@ export default function NewTagList({ props }) {
   }
 
   return (
-    <Grid item xs={12}>
       <Stack direction="row">
         {props.tags.map((t) => (
           <Box sx={{ pr: 1 }}>
@@ -26,6 +25,5 @@ export default function NewTagList({ props }) {
           </Box>
         ))}
       </Stack>
-    </Grid>
   );
 }
