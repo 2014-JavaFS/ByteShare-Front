@@ -2,6 +2,7 @@ import { Button, Card, Divider, Grid, Stack, Typography } from "@mui/material";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import loggedInUserId from "../util/loggedInUserId";
+import IngredientList from "../components/IngredientList";
 
 export default function FullRecipePage() {
   const { recipeId } = useParams();
@@ -65,7 +66,7 @@ export default function FullRecipePage() {
           </Grid>
 
           <Grid item xs={4}>
-            <b>RECIPE INGREDIENT LIST COMPONENT GO HERE</b> <br /> {loremIpsum}
+          <IngredientList recipeId={recipeId} />
           </Grid>
         </Grid>
       </Card>
