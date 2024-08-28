@@ -34,14 +34,22 @@ export default function NewPostForm() {
   function handlePostRecipe() {
     //some sort of validation
     //visual feedback at some point
-    if (!recipeText || ingredients.length < 1 || tags.length < 1) return;
+    if (
+      !recipeText ||
+      !prepTime ||
+      !cookTime ||
+      ingredients.length < 1 ||
+      tags.length < 1
+    ) {
+      return;
+    }
 
     if (!recipeText) console.log("===PROTO RECIPE INFO===");
     console.log("text:\n" + JSON.stringify(recipeText));
     console.log("ingredients:\n" + JSON.stringify(ingredients));
     console.log("tags:\n" + JSON.stringify(tags));
-    console.log("prep time: "+ prepTime);
-    console.log("cook time: "+ cookTime);
+    console.log("prep time: " + prepTime);
+    console.log("cook time: " + cookTime);
     console.log("=======================");
   }
 
@@ -63,7 +71,7 @@ export default function NewPostForm() {
             required
             fullWidth
             color="secondary"
-            sx={{ m: 1, width:"40%" }}
+            sx={{ m: 1, width: "40%" }}
           />
           <TextField
             label="Cook Time"
@@ -72,7 +80,7 @@ export default function NewPostForm() {
             required
             fullWidth
             color="secondary"
-            sx={{ m: 1, width:"40%" }}
+            sx={{ m: 1, width: "40%" }}
           />
         </Stack>
         <Divider sx={{ m: 1 }} />
@@ -94,11 +102,10 @@ export default function NewPostForm() {
         <Divider sx={{ m: 1 }} />
 
         {optionalAlert(!recipeText, "You must add a Title and Description!")}
-        {optionalAlert(
-          ingredients.length < 1,
-          "You must add at least one ingredient!"
-        )}
+        {optionalAlert(ingredients.length < 1, "You must add at least one ingredient!")}
         {optionalAlert(tags.length < 1, "You must add at least one tag!")}
+        {optionalAlert(!prepTime, "You must enter a Prep Time!")}
+        {optionalAlert(!cookTime, "You must enter a Cook Time!")}
         <Button
           color="secondary"
           size="large"
