@@ -5,11 +5,10 @@ import {
   List,
   ListItem,
   Box,
-  Stack,
   Grid,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import { NavLink, useNavigate, useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { bsServer } from "../common/byteshare-server";
 
 export default function SearchResults() {
