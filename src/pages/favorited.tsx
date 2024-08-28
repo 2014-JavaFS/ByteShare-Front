@@ -66,6 +66,10 @@ export default function favorited({ props }){
         location.reload();
     }
 
+    async function goToRecipe(recipeID:number){
+      //Try To Navigate To the Recipe Page?
+    }
+
     window.onload = function(){
         //testing();
         getFavorites();
@@ -148,6 +152,9 @@ export default function favorited({ props }){
                           <br></br>
                           {data.content}
                         </Typography>
+                        <br></br>
+                        <Button onClick={() => goToRecipe(data.recipeId)}>Go To Full Page</Button>
+
                         </Card>
                         ) 
                     }
