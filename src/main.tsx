@@ -29,7 +29,7 @@ export default function App() {
               <Route path="2" element={<TestBlock props={{num:2}} />} />
               <Route path="3" element={<TestBlock props={{num:3}} />} />
               <Route path="4" element={<TestBlock props={{num:4}} />} />
-              <Route path="recipe/:recipeId" element={<FullRecipePage/>}/>
+              <Route path="recipe/:recipeId" element={<FullRecipePage />} />
               <Route path="newpost" element={<NewPostForm />} />
               <Route path="register" element={<RegisterForm/>} />
               <Route path="login" element={<LoginForm/>} />
