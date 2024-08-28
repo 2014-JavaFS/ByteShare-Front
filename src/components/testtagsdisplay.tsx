@@ -1,14 +1,40 @@
 import { Box, Chip, Grid, Stack } from "@mui/material";
+import { bsServer } from "../common/byteshare-server";
+import { useEffect, useState } from "react";
 
-export default function TestTagBlock(){
+export default function DisplayTagList({recipeId}){
 
-    // TODO :  this array should be input from props or some backend call, hardcoding for now
-    // this array of strings should be received from the backend findAllTagNamesByRecipe method.
-    const tagArray: string[] = [ "dummyTagOne", "dummyTagThree","dummyTagTwo",]
+    const [tagNames, setTagNames] = useState([]);
+
+    useEffect(
+        ()=>{
+            async function getTagNameArray(){
+        let int: string = recipeId;
+
+        try{
+      const axResp = await bsServer.get('/tags/findTagNames/'+int);
+      console.log(axResp.headers);
+      console.log(axResp.status);
+      console.log(axResp.data);
+
+    
+      if(axResp.status > 199 && axResp.status < 300){
+        setTagNames(axResp.data);
+      }else{
+        //do something bad
+      }
+    }catch(error){
+      console.error(error);
+      console.error(status);
+     }
+    }
+    getTagNameArray()
+},[])
+    
     return(
         <Grid>
             <Stack direction={"row"}>
-                {tagArray.map((tag)=>(
+                {tagNames.map((tag)=>(
                     <Box sx={{ pr: 1 }}>
                         <Chip
                         key = {tag}
