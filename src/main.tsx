@@ -24,7 +24,7 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Layout />}>
               <Route index element={<Home />} />
-              <Route path="profile" element={<UserProfile />} />
+              <Route path="users" element={<UserProfile />} />
               <Route path="1" element={<TestBlock props={{num:1}} />} />
               <Route path="2" element={<TestBlock props={{num:2}} />} />
               <Route path="3" element={<TestBlock props={{num:3}} />} />
