@@ -3,7 +3,7 @@ import axios from "axios";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { amsServer } from "../common/byteshare-server";
+import { bsServer } from "../common/byteshare-server";
 
 
 export default function favorited({ props }){
@@ -33,7 +33,7 @@ export default function favorited({ props }){
     */
 
     async function getFavorites(){
-        amsServer.get('/favorite',
+        bsServer.get('/favorite',
           {
             headers: { 
               'Accept': 'application/json',
@@ -49,7 +49,7 @@ export default function favorited({ props }){
     }
 
     async function removeFromFavorite(recipieId:number){
-        amsServer.delete('/favorite',
+        bsServer.delete('/favorite',
         {
           headers: { 
             'Accept': 'application/json',

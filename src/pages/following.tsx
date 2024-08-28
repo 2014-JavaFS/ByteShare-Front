@@ -3,7 +3,7 @@ import axios from "axios";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { amsServer } from "../common/byteshare-server";
+import { bsServer } from "../common/byteshare-server";
 
 export default function following({ props }){
     
@@ -39,7 +39,7 @@ export default function following({ props }){
 
     
     async function getFollowersAmsServer(){
-        amsServer.get('/follow/followers/user?userId='+currentLogin,
+        bsServer.get('/follow/followers/user?userId='+currentLogin,
             {
                 responseType:"json",
                 headers: { 
@@ -78,7 +78,7 @@ export default function following({ props }){
     */
 
     async function getFollowerCountAmsServer(){
-        amsServer.get('/follow/following/user?userId='+currentLogin,
+        bsServer.get('/follow/following/user?userId='+currentLogin,
             {
                 responseType:"json",
                 headers: { 
