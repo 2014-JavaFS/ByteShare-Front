@@ -1,7 +1,16 @@
-import { Button, Card, Divider, Grid, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Card,
+  Divider,
+  Grid,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import loggedInUserId from "../util/loggedInUserId";
+import IngredientList from "../components/IngredientList";
 import DisplayTagList from "../components/testtagsdisplay";
 
 export default function FullRecipePage() {
@@ -23,7 +32,7 @@ export default function FullRecipePage() {
 
   return (
     <>
-      <Card sx={{ p: 5, m: 5, mb: 1, width: "80%" }}>
+      <Card sx={{ p: 5, m: 5, mb: 1, width: "80vw" }}>
         <Typography variant="h2" align="center">
           Recipe Id: {recipeId} {title}
         </Typography>
@@ -58,7 +67,7 @@ export default function FullRecipePage() {
             and setAuthor functions to update states once axios response is
             returned
             <Divider sx={{ m: 2 }} />
-            <DisplayTagList recipeId={recipeId}/>
+            <DisplayTagList recipeId={recipeId} />
           </Grid>
 
           <Grid item xs={1}>
@@ -66,12 +75,13 @@ export default function FullRecipePage() {
           </Grid>
 
           <Grid item xs={4}>
-            <b>RECIPE INGREDIENT LIST COMPONENT GO HERE</b> <br /> {loremIpsum}
+            <Typography variant="h5">Ingredients:</Typography>
+            <IngredientList recipeId={recipeId} />
           </Grid>
         </Grid>
       </Card>
       <Stack>
-        <Card sx={{ p: 5, m: 5, my: 1, width: "80%" }}>Comment display?</Card>
+        <Card sx={{ p: 5, m: 5, my: 1, width: "80vw" }}>Comment display?</Card>
       </Stack>
     </>
   );
