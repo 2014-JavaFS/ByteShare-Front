@@ -11,7 +11,7 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import loggedInUserId from "../util/loggedInUserId";
 import IngredientList from "../components/IngredientList";
-import DisplayTagList from "../components/testtagsdisplay";
+import DisplayTagList from "../components/DisplayTagList";
 
 export default function FullRecipePage() {
   const { recipeId } = useParams();

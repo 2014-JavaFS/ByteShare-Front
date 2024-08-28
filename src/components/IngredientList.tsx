@@ -25,8 +25,8 @@ export default function IngredientList({ recipeId }) {
       getRecipeIngredients();
 
       setIngredients([
-        { id: 1, ingredientName: "can", quantity: 1, unit:"" },
-        { id: 2, ingredientName: "air", quantity: 5, unit:"grams" },
+        { id: 1, ingredientName: "can", quantity: 1, unit: "" },
+        { id: 2, ingredientName: "air", quantity: 5, unit: "grams" },
       ]);
     },
     [] // when the page first loads
