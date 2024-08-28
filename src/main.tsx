@@ -8,7 +8,6 @@ import Home from "./pages/home.tsx";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import theme from "./theme.ts";
 import NewPostForm from "./pages/newPostForm.tsx";
-import DisplayTagList from "./components/testtagsdisplay.tsx";
 import UserProfile from "./pages/userProfile.tsx";
 import RegisterForm from "./pages/register.tsx";
 import LoginForm from "./pages/login.tsx";
