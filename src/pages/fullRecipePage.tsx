@@ -2,6 +2,7 @@ import { Button, Card, Divider, Grid, Stack, Typography } from "@mui/material";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import loggedInUserId from "../util/loggedInUserId";
+import DisplayTagList from "../components/testtagsdisplay";
 
 export default function FullRecipePage() {
   const { recipeId } = useParams();
@@ -57,7 +58,7 @@ export default function FullRecipePage() {
             and setAuthor functions to update states once axios response is
             returned
             <Divider sx={{ m: 2 }} />
-            <b>TAG LIST COMPONENT GO HERE</b> tag tag tag tag tag
+            <DisplayTagList recipeId={recipeId}/>
           </Grid>
 
           <Grid item xs={1}>

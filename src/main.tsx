@@ -9,7 +9,7 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import theme from "./theme.ts"; 
 //import NewPost from "./pages/newPost.tsx";
 import NewPostForm from "./pages/newPostForm.tsx";
-import TestTagBlock from "./components/testtagsdisplay.tsx";
+import DisplayTagList from "./components/testtagsdisplay.tsx";
 import UserProfile from "./pages/userProfile.tsx";
 import RegisterForm from "./pages/register.tsx";
 import LoginForm from "./pages/login.tsx";
