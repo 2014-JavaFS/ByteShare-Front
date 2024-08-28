@@ -7,6 +7,7 @@ import { bsServer } from "../common/byteshare-server";
 import loggedInUserId from "../util/loggedInUserId";
 import { useNavigate } from "react-router-dom";
 
+
 export default function following({ props }){
     
     const [checking, setChecking] = useState(null);
@@ -15,7 +16,6 @@ export default function following({ props }){
     const currentLogin:number = loggedInUserId();
     const navigate = useNavigate();
 
-    
 
     //Depreciated Code
     /*
@@ -43,7 +43,7 @@ export default function following({ props }){
 
     
     async function getFollowersAmsServer(){
-        bsServer.get('/follow/following/user?userId='+currentLogin,
+        bsServer.get('/follow/followers/user?userId='+currentLogin,
             {
                 responseType:"json",
                 headers: { 
@@ -100,31 +100,11 @@ export default function following({ props }){
           });
     }
 
-    function moveToFollowers(){
-        navigate(`/followers`, {replace:true})
-        location.reload();
+    function moveToFollowing(){
+      navigate(`/following`, {replace:true})
+      location.reload();
 
-    }
-
-    function removeFollowing(followID:number){
-        bsServer.delete('/follow?followingId='+followID.toString(),
-            {
-                responseType:"json",
-                headers: { 
-                    'Accept': 'application/json',
-                    'currentUserId':currentLogin,
-                  },
-
-        }).then((response) => {
-            //setChecking(response);
-            setFollowers(response.data.length);
-            //setFollowers(response.data.length);
-            //console.log(response.data);
-          }, (error) => {
-            console.log("You Have an Error"+"\n"+error);
-          });
-        location.reload();
-    }
+  }
 
     
     window.onload = function(){
@@ -146,8 +126,6 @@ export default function following({ props }){
 
         <Typography variant="body1" align="justify">
             Waiting For Things To Load In, Or User has No Followers
-            <Button onClick={moveToFollowers}>View Your Followers</Button>
-
         </Typography>
  
     </Card> );
@@ -158,26 +136,26 @@ export default function following({ props }){
         <>
             <Card sx={{ p: 5, m: 5, width: "100%" }}>
                 <Typography variant="h2" align="center">
-                Total People You Are Following
+                Followers
                 </Typography>
                 <Typography variant="body1" align = "justify">
+                    <Button onClick={moveToFollowing}>Return To Your Following</Button>
+                    <br></br>
+                    <br></br>
+
                     {followers}
-                    <br></br>
-                    <br></br>
-                    <Button onClick={moveToFollowers}>View Your Followers</Button>
                 </Typography>
 
             </Card> 
 
             <Card sx={{ p: 5, m: 5, width: "100%" }}>
                 <Typography variant="h2" align="center">
-                Following List
+                Follower List
                 </Typography>
                 <Typography variant="body1" align = "justify">
                     {checking.data.map((data) =>
                         <Card sx={{ p: 5, m: 5, width: "100%" }}>
                         <Typography>{data.following.username}</Typography>
-                        <Button onClick={()=>removeFollowing(data.following.userId)}>Remove From List</Button>
                         </Card>
                         ) 
                     }

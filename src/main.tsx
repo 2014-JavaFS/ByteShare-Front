@@ -13,6 +13,7 @@ import RegisterForm from "./pages/register.tsx";
 import LoginForm from "./pages/login.tsx";
 import Favorited from "./pages/favorited.tsx";
 import Following from "./pages/following.tsx";
+import Followers from "./pages/followers.tsx";
 import FullRecipePage from "./pages/fullRecipePage.tsx";
 
 export default function App() {
@@ -34,6 +35,7 @@ export default function App() {
               <Route path="register" element={<RegisterForm/>} />
               <Route path="login" element={<LoginForm/>} />
               <Route path="following" element={<Following props={{num:1}} />} />
+              <Route path="followers" element={<Followers props={{num:1}} />} />
               <Route path="favorited" element={<Favorited props={{num:2}} />} />
             </Route>
           </Routes>

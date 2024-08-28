@@ -4,13 +4,16 @@ import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { bsServer } from "../common/byteshare-server";
+import loggedInUserId from "../util/loggedInUserId";
+import { useNavigate } from "react-router-dom";
 
 
 export default function favorited({ props }){
 
+    const navigate = useNavigate();
     const [checking, setChecking] = useState(null);
     //TODO: Switch Out With Getting the Login Data
-    const currentLoggedInUser=1;
+    const currentLoggedInUser = loggedInUserId();
 
     //Older Depreciated Testing Code
     /*
@@ -68,6 +71,7 @@ export default function favorited({ props }){
 
     async function goToRecipe(recipeID:number){
       //Try To Navigate To the Recipe Page?
+      navigate(`/recipe/`+recipeID.toString(), {replace:true})
     }
 
     window.onload = function(){
