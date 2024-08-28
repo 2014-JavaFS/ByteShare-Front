@@ -161,6 +161,7 @@ export default function PrimarySearchAppBar() {
         <IconButton
           onClick={() => {
             navigate("/following");
+            location.reload();
           }}
           size="large"
           sx={{ mx: 1 }}
@@ -174,6 +175,7 @@ export default function PrimarySearchAppBar() {
         <IconButton
           onClick={() => {
             navigate("/favorited");
+            location.reload();
           }}
           size="large"
           sx={{ mx: 1 }}
