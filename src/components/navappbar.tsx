@@ -65,7 +65,7 @@ export default function PrimarySearchAppBar() {
             </ListItemButton>
             <Divider />
             {/*<ListItemButton onClick={() => logout()}>Logout</ListItemButton>*/}
-            <ListItemButton onClick={toggleLogin}>Logout</ListItemButton>
+            <ListItemButton onClick={handleLogoutClick}>Logout</ListItemButton>
           </List>
         </Box>
       </Drawer>
@@ -135,13 +135,15 @@ export default function PrimarySearchAppBar() {
   //state for determining if logged in
   //FIXME: this should probably be handled differently, this was mostly a proof of concept
   const [login, setLogin] = React.useState(initLogin);
-  function toggleLogin() {
-    setLogin(!login);
-  }
+
   function handleLoginClick() {
-    //navigate("/login");
-    toggleLogin();
-    console.log("Login");
+    setLogin(true);
+    navigate("/login");
+  }
+
+  function handleLogoutClick() {
+    setLogin(false);
+    navigate("/login");
   }
 
   //if logged out, only shows login button,
@@ -163,7 +165,7 @@ export default function PrimarySearchAppBar() {
           onClick={() => {
             navigate("/following");
           }}
-          size="large" 
+          size="large"
         >
           <Badge badgeContent={badge} color="info">
             <MailIcon />
@@ -182,21 +184,15 @@ export default function PrimarySearchAppBar() {
         </IconButton>
       </Tooltip>
       <Tooltip title={"Logout"} arrow>
-        <IconButton
-          onClick={() => {
-            navigate("/login");
-          }}
-          size="large"
-          edge="end"
-        >
+        <IconButton onClick={handleLogoutClick} size="large" edge="end">
           <LogoutIcon />
         </IconButton>
-      </Tooltip> 
-    </Stack> 
+      </Tooltip>
+    </Stack>
   ) : (
     <Box>
       <Tooltip title={"Login"} arrow>
-        <IconButton onClick={() => navigate("/login")} edge="end" size="large">
+        <IconButton onClick={handleLoginClick} edge="end" size="large">
           <LoginIcon />
         </IconButton>
       </Tooltip>
