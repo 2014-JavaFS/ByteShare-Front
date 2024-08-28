@@ -16,12 +16,14 @@ import {
   Input,
   List,
   ListItemButton,
+  Stack,
   Tooltip,
 } from "@mui/material";
 import { NavLink, useNavigate } from "react-router-dom";
 import React from "react";
 import { useTheme } from "@mui/material/styles";
 import LoginIcon from "@mui/icons-material/Login";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 const badge = "🔫";
 const initLogin = false;
@@ -79,7 +81,7 @@ export default function PrimarySearchAppBar() {
   const Search = styled("div")(() => ({
     position: "relative",
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: "#FFFFFF22", 
+    backgroundColor: "#FFFFFF22",
     marginRight: theme.spacing(2),
     marginLeft: 0,
     [theme.breakpoints.up("xs")]: {
@@ -145,7 +147,7 @@ export default function PrimarySearchAppBar() {
   //if logged out, only shows login button,
   //but if logged in, shows available options
   const userMenu = login ? (
-    <Box>
+    <Stack direction="row" spacing={1}>
       <Tooltip title={"Create New Post"} arrow>
         <IconButton
           onClick={() => {
@@ -161,8 +163,7 @@ export default function PrimarySearchAppBar() {
           onClick={() => {
             navigate("/following");
           }}
-          size="large"
-          sx={{ mx: 1 }}
+          size="large" 
         >
           <Badge badgeContent={badge} color="info">
             <MailIcon />
@@ -180,11 +181,22 @@ export default function PrimarySearchAppBar() {
           <AccountCircle />
         </IconButton>
       </Tooltip>
-    </Box>
+      <Tooltip title={"Logout"} arrow>
+        <IconButton
+          onClick={() => {
+            navigate("/login");
+          }}
+          size="large"
+          edge="end"
+        >
+          <LogoutIcon />
+        </IconButton>
+      </Tooltip> 
+    </Stack> 
   ) : (
     <Box>
       <Tooltip title={"Login"} arrow>
-        <IconButton onClick={handleLoginClick} edge="end" size="large">
+        <IconButton onClick={() => navigate("/login")} edge="end" size="large">
           <LoginIcon />
         </IconButton>
       </Tooltip>
