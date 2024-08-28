@@ -6,15 +6,14 @@ import ReactDOM from "react-dom/client";
 import Layout from "./pages/layout.tsx";
 import Home from "./pages/home.tsx";
 import { CssBaseline, ThemeProvider } from "@mui/material";
-import theme from "./theme.ts"; 
-//import NewPost from "./pages/newPost.tsx";
+import theme from "./theme.ts";
 import NewPostForm from "./pages/newPostForm.tsx";
-import TestTagBlock from "./components/testtagsdisplay.tsx";
 import UserProfile from "./pages/userProfile.tsx";
 import RegisterForm from "./pages/register.tsx";
 import LoginForm from "./pages/login.tsx";
 import Favorited from "./pages/favorited.tsx";
 import Following from "./pages/following.tsx";
+import FullRecipePage from "./pages/fullRecipePage.tsx";
 
 export default function App() {
   return (
@@ -29,7 +28,8 @@ export default function App() {
               <Route path="1" element={<TestBlock props={{num:1}} />} />
               <Route path="2" element={<TestBlock props={{num:2}} />} />
               <Route path="3" element={<TestBlock props={{num:3}} />} />
-              <Route path="4" element={<TestTagBlock/>} />
+              <Route path="4" element={<TestBlock props={{num:4}} />} />
+              <Route path="recipe/:recipeId" element={<FullRecipePage />} />
               <Route path="newpost" element={<NewPostForm />} />
               <Route path="register" element={<RegisterForm/>} />
               <Route path="login" element={<LoginForm/>} />
