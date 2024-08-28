@@ -26,7 +26,6 @@ import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
 
 const badge = "🔫";
-const initLogin = false;
 
 export default function PrimarySearchAppBar() {
   //getting a navigate hook to go between routes
@@ -131,24 +130,14 @@ export default function PrimarySearchAppBar() {
   //#endregion
 
   //#region usermenu
-
-  //state for determining if logged in
-  //FIXME: this should probably be handled differently, this was mostly a proof of concept
-  const [login, setLogin] = React.useState(initLogin);
-
-  function handleLoginClick() {
-    setLogin(true);
-    navigate("/login");
-  }
-
   function handleLogoutClick() {
-    setLogin(false);
+    localStorage.clear();
     navigate("/login");
   }
 
   //if logged out, only shows login button,
   //but if logged in, shows available options
-  const userMenu = login ? (
+  const userMenu = localStorage.getItem("jwt") ? (
     <Stack direction="row" spacing={1}>
       <Tooltip title={"Create New Post"} arrow>
         <IconButton
@@ -175,7 +164,7 @@ export default function PrimarySearchAppBar() {
       <Tooltip title={"Profile"} arrow>
         <IconButton
           onClick={() => {
-            navigate("/profile");
+            navigate("/users");
           }}
           size="large"
           edge="end"
@@ -192,7 +181,7 @@ export default function PrimarySearchAppBar() {
   ) : (
     <Box>
       <Tooltip title={"Login"} arrow>
-        <IconButton onClick={handleLoginClick} edge="end" size="large">
+        <IconButton onClick={() => navigate("login")} edge="end" size="large">
           <LoginIcon />
         </IconButton>
       </Tooltip>
