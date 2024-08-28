@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { bsServer } from "../common/byteshare-server";
 import { useNavigate } from "react-router-dom";
-import { Card, Typography, Stack, TextField, Tooltip, IconButton } from "@mui/material";
+import { Card, Typography, Stack, TextField, Tooltip, IconButton, Button } from "@mui/material";
 import LoginIcon from '@mui/icons-material/Login';
 import loggedInUserId from "../util/loggedInUserId";
 
@@ -45,7 +45,7 @@ export default function LoginForm(){
           direction="row"
           spacing={1}
           alignItems="center"
-          sx={{ width: "90%" }}
+          sx={{ width: "90%", my:1 }}
         >
           <TextField
             label="Email"
@@ -72,6 +72,7 @@ export default function LoginForm(){
           </Tooltip>
         </Stack>
       </form>
+      <Button onClick={() => {navigate("/register")}} >Don't have an account? Register here.</Button>
         </Card> 
     );
 }
