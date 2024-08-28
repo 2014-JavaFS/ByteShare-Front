@@ -13,6 +13,7 @@ import TestTagBlock from "./components/testtagsdisplay.tsx";
 import UserProfile from "./pages/userProfile.tsx";
 import RegisterForm from "./pages/register.tsx";
 import LoginForm from "./pages/login.tsx";
+import FullRecipePage from "./pages/fullRecipePage.tsx";
 
 export default function App() {
   return (
@@ -27,7 +28,8 @@ export default function App() {
               <Route path="1" element={<TestBlock props={{num:1}} />} />
               <Route path="2" element={<TestBlock props={{num:2}} />} />
               <Route path="3" element={<TestBlock props={{num:3}} />} />
-              <Route path="4" element={<TestTagBlock/>} />
+              <Route path="4" element={<TestBlock props={{num:4}} />} />
+              <Route path="recipe/:recipeId" element={<FullRecipePage />} />
               <Route path="newpost" element={<NewPostForm />} />
               <Route path="register" element={<RegisterForm/>} />
               <Route path="login" element={<LoginForm/>} />
