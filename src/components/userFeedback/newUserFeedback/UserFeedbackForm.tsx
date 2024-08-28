@@ -2,6 +2,7 @@ import { Button, Card, Divider, Paper, Rating, Stack, TextField, Typography } fr
 import { Box } from "@mui/system";
 import { useState } from "react";
 import StarIcon from "@mui/icons-material/Star";
+import { amsServer } from "../../../common/byteshare-server";
 
 function UserFeedbackForm({setFeedback}){
     const handlePostFeedback = (event) => {
@@ -13,7 +14,7 @@ function UserFeedbackForm({setFeedback}){
         };
 
         console.log(JSON.stringify(feedback));
-        setFeedback(feedback);
+        amsServer.post("/feedback", feedback)
     }
 
     const labels: {[index: string]: string} = {
