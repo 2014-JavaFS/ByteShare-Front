@@ -12,6 +12,7 @@ import UserProfile from "./pages/userProfile.tsx";
 import RegisterForm from "./pages/register.tsx";
 import LoginForm from "./pages/login.tsx";
 import FullRecipePage from "./pages/fullRecipePage.tsx";
+import SearchResults from "./pages/searchResults.tsx";
 
 export default function App() {
   return (
@@ -27,6 +28,7 @@ export default function App() {
               <Route path="2" element={<TestBlock props={{num:2}} />} />
               <Route path="3" element={<TestBlock props={{num:3}} />} />
               <Route path="4" element={<TestBlock props={{num:4}} />} />
+              <Route path="search/:searchTerm" element={<SearchResults />} />
               <Route path="recipe/:recipeId" element={<FullRecipePage />} />
               <Route path="newpost" element={<NewPostForm />} />
               <Route path="register" element={<RegisterForm/>} />

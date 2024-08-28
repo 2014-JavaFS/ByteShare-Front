@@ -125,8 +125,9 @@ export default function PrimarySearchAppBar() {
 
   function handleSearch(event) {
     console.log("search input: " + event.target.value);
+    console.log("search/" + event.target.value)
+    navigate("search/" + event.target.value);
   }
-
   //#endregion
 
   //#region usermenu
