@@ -34,7 +34,7 @@ export default function App() {
               <Route path="register" element={<RegisterForm/>} />
               <Route path="login" element={<LoginForm/>} />
               <Route path="following" element={<Following props={{num:1}} />} />
-              <Route path="favorited" element={<Favorited props={{num:2}} />} />
+              <Route path="favorited" element={<Favorited />} />
             </Route>
           </Routes>
         </BrowserRouter>
