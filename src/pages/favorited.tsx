@@ -1,4 +1,4 @@
-import { Typography, Card, Divider } from "@mui/material";
+import { Typography, Card, Divider, Button } from "@mui/material";
 import axios from "axios";
 import React from "react";
 import { useEffect } from "react";
@@ -8,12 +8,12 @@ import { amsServer } from "../common/byteshare-server";
 
 export default function favorited({ props }){
 
-    const testOne ="Checking";  
-    const testTwo ="What";
-    const testThree="Each";
-    const testFour="Does";
     const [checking, setChecking] = useState(null);
+    //TODO: Switch Out With Getting the Login Data
+    const currentLoggedInUser=1;
 
+    //Older Depreciated Testing Code
+    /*
     async function testing(){
         axios.get('http://localhost:8080/users', {
             responseType:"json",
@@ -30,13 +30,14 @@ export default function favorited({ props }){
             console.log("You Have an Error"+"\n"+error);
           });
     }   
+    */
 
     async function getFavorites(){
         amsServer.get('/favorite',
           {
             headers: { 
               'Accept': 'application/json',
-              'userType': 'ADMIN'
+              'userID': currentLoggedInUser.toString()
             }
           })
           .then((response) => {
@@ -47,8 +48,27 @@ export default function favorited({ props }){
           });
     }
 
+    async function removeFromFavorite(recipieId:number){
+        amsServer.delete('/favorite',
+        {
+          headers: { 
+            'Accept': 'application/json',
+            'userID': currentLoggedInUser.toString(),
+            'recipeID':recipieId.toString()
+          }
+        })
+        .then((response) => {
+          setChecking(response);
+          //console.log(response.data);
+        }, (error) => {
+          console.log("You Have an Error"+"\n"+error);
+        });
+        location.reload();
+    }
+
     window.onload = function(){
-        testing();
+        //testing();
+        getFavorites();
     }
 
     //useEffect(() => {
@@ -58,13 +78,13 @@ export default function favorited({ props }){
     //
     if(!checking) return (<Card sx={{ p: 5, m: 5, width: "100%" }}>
         <Typography variant="h2" align="center">
-          Recipe Lister Testing
+          Page Error Handeling
         </Typography>
 
         <Divider sx={{ my: 2 }} />
 
         <Typography variant="body1" align="justify">
-            Waiting For Things To Load In
+            Page Either is Loading in, Failed to Load In, Or something caused an Error
         </Typography>
  
       </Card> );
@@ -120,11 +140,13 @@ export default function favorited({ props }){
         {checking.data.map((data) =>
                         <Card sx={{ p: 5, m: 5, width: "100%" }}>
                           <Typography variant="h2" align="center">
-                            Insert Recipie Name
+                            {data.name}<Button onClick={() => removeFromFavorite(data.recipeId)}>Remove Favorite</Button>
                           </Typography>
-                        <Typography>{data.username} Make This a Link?</Typography>
+                        <Typography>Author:{data.author}</Typography>
                         <Typography variant="body1" align="justify">
-                          Insert Description Here
+                          Recipe Description:
+                          <br></br>
+                          {data.content}
                         </Typography>
                         </Card>
                         ) 

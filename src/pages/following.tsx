@@ -9,10 +9,12 @@ export default function following({ props }){
     
     const [checking, setChecking] = useState(null);
     const [followers, setFollowers] = useState(0);
-    const currentLogin:number = 8;
-    //Get Followers from params
-    //localhost:8080/follow/following/user?userId=8
+    //TODO: Switch Out With Getting the Login Data or user data
+    const currentLogin:number = 2;
+    
 
+    //Depreciated Code
+    /*
     async function getFollowers(){
         axios.get('http://localhost:8080/follow/following/user?userId='+currentLogin, {
             responseType:"json",
@@ -32,13 +34,22 @@ export default function following({ props }){
             console.log("You Have an Error"+"\n"+error);
           });
     }  
+    */
 
+
+    
     async function getFollowersAmsServer(){
-        amsServer.get('/follow/following/user?userId='+currentLogin,
+        amsServer.get('/follow/followers/user?userId='+currentLogin,
             {
+                responseType:"json",
+                headers: { 
+                    'Accept': 'application/json'
+                    
+                  }
 
         }).then((response) => {
             setChecking(response);
+            setFollowers(response.data.length);
             //setFollowers(response.data.length);
             //console.log(response.data);
           }, (error) => {
@@ -46,6 +57,8 @@ export default function following({ props }){
           });
     }
     
+    //Depreciated Code
+    /*
     async function getFollowerCount(){
         axios.get('http://localhost:8080/follow/following/user?userId='+currentLogin, {
             responseType:"json",
@@ -62,16 +75,32 @@ export default function following({ props }){
             console.log("You Have an Error"+"\n"+error);
           });
     }
+    */
 
     async function getFollowerCountAmsServer(){
+        amsServer.get('/follow/following/user?userId='+currentLogin,
+            {
+                responseType:"json",
+                headers: { 
+                    'Accept': 'application/json'
+                    
+                  }
 
+        }).then((response) => {
+            //setChecking(response);
+            setFollowers(response.data.length);
+            //setFollowers(response.data.length);
+            //console.log(response.data);
+          }, (error) => {
+            console.log("You Have an Error"+"\n"+error);
+          });
     }
 
     
     window.onload = function(){
-        getFollowers();
+        //getFollowers();
         //getFollowerCount();
-        //getFollowersAmsServer();
+        getFollowersAmsServer();
         //getFollowerCountAmsServer();
     }
 
@@ -80,13 +109,13 @@ export default function following({ props }){
 
     <Card sx={{ p: 5, m: 5, width: "100%" }}>
         <Typography variant="h2" align="center">
-          Followers
+          Followers Page
         </Typography>
 
         <Divider sx={{ my: 2 }} />
 
         <Typography variant="body1" align="justify">
-            Waiting For Things To Load In
+            Waiting For Things To Load In, Or User has No Followers
         </Typography>
  
     </Card> );
@@ -100,7 +129,7 @@ export default function following({ props }){
                 Followers
                 </Typography>
                 <Typography variant="body1" align = "justify">
-                    <Button onClick={getFollowerCount}>Update Followers</Button>
+                    <Button onClick={getFollowersAmsServer}>Update Followers</Button>
                     <br></br>
                     <br></br>
 
@@ -116,7 +145,7 @@ export default function following({ props }){
                 <Typography variant="body1" align = "justify">
                     {checking.data.map((data) =>
                         <Card sx={{ p: 5, m: 5, width: "100%" }}>
-                        <Typography>{data.follower.username}</Typography></Card>
+                        <Typography>{data.following.username}</Typography></Card>
                         ) 
                     }
                 </Typography>
