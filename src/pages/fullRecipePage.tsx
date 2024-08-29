@@ -1,5 +1,4 @@
 import {
-  Box,
   Button,
   Card,
   Divider,
@@ -17,6 +16,9 @@ import { bsServer } from "../common/byteshare-server";
 
 export default function FullRecipePage() {
   const { recipeId } = useParams();
+  const [followed, setFollowed] = useState(false);
+
+  const [favorited, setFavorited] = useState(false);
 
   //really didnt wanna handle this here but im tired and cant think of a better way rn and this does at least work
   const [recipe, setRecipe] = useState({
@@ -55,25 +57,22 @@ export default function FullRecipePage() {
       getRecipe();
     },
     [] // when the page first loads
-  );
-
-
-  const loremIpsum =
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enimad minim veniam, quis nostrud exercitation ullamco laboris nisi utaliquip ex ea commodo consequat. Duis aute irure dolor inreprehenderit in voluptate velit esse cillum dolore eu fugiat nullapariatur. Excepteur sint occaecat cupidatat non proident, sunt inculpa qui officia deserunt mollit anim id est laborum.";
-
-  function handleFollowClick() {
-    const currentUser = loggedInUserId();
+  ); 
+  
+  async function handleFollowClick() {
+    setFollowed(true);
     //post request w/ current userId and author.userId
   }
   function handleFavoriteClick() {
-    const currentUser = loggedInUserId();
+    setFavorited(true);
     //post request w/ current userId and author.userId
   }
 
   return (
     <>
       <Card sx={{ p: 5, m: 5, mb: 1, width: "80vw" }}>
-        <Typography variant="h2" align="center">{recipe.title}
+        <Typography variant="h2" align="center">
+          {recipe.title}
         </Typography>
         <Divider sx={{ m: 2 }} />
         <Stack direction="row" spacing={1}>
@@ -84,6 +83,7 @@ export default function FullRecipePage() {
           <Button
             color="secondary"
             variant="outlined"
+            disabled={followed}
             onClick={handleFollowClick}
           >
             Follow
@@ -92,6 +92,7 @@ export default function FullRecipePage() {
           <Button
             color="secondary"
             variant="outlined"
+            disabled={favorited}
             onClick={handleFavoriteClick}
           >
             Favorite
@@ -102,8 +103,7 @@ export default function FullRecipePage() {
 
         <Grid container spacing={2}>
           <Grid item xs={7}>
-            <DisplayRecipe recipe={recipe}
-            />
+            <DisplayRecipe recipe={recipe} />
             <Divider sx={{ m: 2 }} />
             <DisplayTagList recipeId={recipeId} />
           </Grid>
