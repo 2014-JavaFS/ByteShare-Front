@@ -1,7 +1,6 @@
 import "./index.css";
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import TestBlock from "./components/test.tsx";
 import ReactDOM from "react-dom/client";
 import Layout from "./pages/layout.tsx";
 import Home from "./pages/home.tsx";
@@ -26,10 +25,6 @@ export default function App() {
             <Route path="/" element={<Layout />}>
               <Route index element={<Home />} />
               <Route path="users" element={<UserProfile />} />
-              <Route path="1" element={<TestBlock props={{ num: 1 }} />} />
-              <Route path="2" element={<TestBlock props={{ num: 2 }} />} />
-              <Route path="3" element={<TestBlock props={{ num: 3 }} />} />
-              <Route path="4" element={<TestBlock props={{ num: 4 }} />} />
               <Route path="search/:searchTerm" element={<SearchResults />} />
               <Route path="recipe/:recipeId" element={<FullRecipePage />} />
               <Route path="newpost" element={<NewPostForm />} />
