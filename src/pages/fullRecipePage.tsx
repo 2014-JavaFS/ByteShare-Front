@@ -1,11 +1,11 @@
 import { Button, Card, Divider, Grid, Stack, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import IngredientList from "../components/IngredientList";
-import DisplayTagList from "../components/DisplayTagList";
+import { useParams } from "react-router-dom"; 
+import IngredientList from "../components/IngredientList"; 
 import DisplayRecipe from "../components/displayRecipe";
-import { bsServer } from "../common/byteshare-server";
+import { bsServer } from "../common/byteshare-server"; 
 import UserFeedback from "../components/userFeedback/UserFeedback";
+import DisplayTagList from "../components/DisplayTagList";
 import UserFeedbackForm from "../components/userFeedback/newUserFeedback/UserFeedbackForm";
 
 export default function FullRecipePage() {
@@ -44,7 +44,7 @@ export default function FullRecipePage() {
           } else {
             console.log("bad");
           }
-        } catch (error: any) {
+        } catch (error) {
           console.log(error);
         }
       }
