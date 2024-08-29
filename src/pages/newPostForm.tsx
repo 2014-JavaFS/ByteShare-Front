@@ -21,8 +21,7 @@ export default function NewPostForm() {
   const [ingredients, setIngredients] = useState([]);
   const [tags, setTags] = useState([]);
   const [prepTime, setPrepTime] = useState("");
-  const [cookTime, setCookTime] = useState("");
-  const [recipeId, setRecipeId] = useState();
+  const [cookTime, setCookTime] = useState(""); 
 
   function optionalAlert(condition: boolean, statement: string) {
     if (condition) {
@@ -34,7 +33,7 @@ export default function NewPostForm() {
     }
   }
 
-  function handlePostRecipe() {
+  async function handlePostRecipe() {
     //some sort of validation
     //visual feedback at some point
     if (
@@ -55,10 +54,8 @@ export default function NewPostForm() {
     console.log("cook time: " + cookTime);
     console.log("=======================");
 
-    makeRecipe();
-    makeRecipeIngredients();
-    makeTags();
-  }
+    makeRecipe(); 
+  } 
 
   async function makeRecipe() {
     const recipe = {
@@ -70,12 +67,15 @@ export default function NewPostForm() {
     };
 
     try {
-      const axResp = await bsServer.post(`/recipes`, { data: { recipe } });
+      console.log(JSON.stringify(recipe));
+      console.log(`/recipes`, recipe);
+      const axResp = await bsServer.post(`/recipes`, recipe);
       console.log(axResp);
 
       if (axResp.status > 199 && axResp.status < 300) {
-        console.log("✔️ Recipe");
-        setRecipeId(axResp.data.recipeId);
+        console.log("✔️ Recipe");  
+        makeRecipeIngredients(axResp.data.recipeId); 
+        makeTags(axResp.data.recipeId);
       } else {
         console.log("❌ Recipe");
       }
@@ -84,24 +84,24 @@ export default function NewPostForm() {
     }
   }
 
-  async function makeRecipeIngredients() {
+  async function makeRecipeIngredients(recipeId) {
     //making the tagDTO list to be passed to the backend (tag DTO only has an Integer:recipeId and a String:tagName)
     const recipeIngredientDTOs = [];
 
     ingredients.map((ing) => {
-      {
         recipeIngredientDTOs.push(
-          ing.ingredient,
-          recipeId,
-          ing.amount,
-          ing.unit
+          {
+          ingredient: ing.ingredient,
+          recipeId: recipeId,
+          quantity: ing.amount,
+          unit: ing.unit
+        }
         );
-      }
     });
     console.log(recipeIngredientDTOs);
 
     try {
-      const axResp = await bsServer.post(`/recipeingredients/`,{data:{recipeIngredientDTOs}}); 
+      const axResp = await bsServer.post(`/recipeingredients`, recipeIngredientDTOs); 
       console.log(axResp);
 
       if (axResp.status > 199 && axResp.status < 300) {
@@ -114,7 +114,7 @@ export default function NewPostForm() {
     }
   }
 
-  async function makeTags() {
+  async function makeTags(recipeId) {
     //making the tagDTO list to be passed to the backend (tag DTO only has an Integer:recipeId and a String:tagName)
     const tagDTOs = tags.map((tagName) => {
       return { recipeId, tagName };
