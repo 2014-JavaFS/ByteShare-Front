@@ -56,7 +56,7 @@ export default function SearchResults() {
                   <Grid item xs={9}>
                     <Typography>By: {result.author.username} </Typography>
                     <Typography>
-                      Posted: {result.date.substring(0, 10)}
+                      Posted: {result.date?result.date.substring(0, 10):"Just now"}
                     </Typography>
                   </Grid>
                   <Grid item xs={3}>
