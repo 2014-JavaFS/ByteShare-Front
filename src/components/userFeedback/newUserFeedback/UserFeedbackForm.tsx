@@ -2,7 +2,7 @@ import { Button, Card, Divider, Paper, Rating, Stack, TextField, Typography } fr
 import { Box } from "@mui/system";
 import { useState } from "react";
 import StarIcon from "@mui/icons-material/Star";
-import { amsServer } from "../../../common/byteshare-server";
+import { bsServer as bsServer } from "../../../common/byteshare-server";
 
 function UserFeedbackForm({setFeedback}){
     const handlePostFeedback = (event) => {
@@ -14,7 +14,7 @@ function UserFeedbackForm({setFeedback}){
         };
 
         console.log(JSON.stringify(feedback));
-        amsServer.post("/feedback", feedback)
+        bsServer.post("/feedback", feedback)
     }
 
     const labels: {[index: string]: string} = {
@@ -29,12 +29,12 @@ function UserFeedbackForm({setFeedback}){
         return `${value} Star${value !== 1 ? 's' : ''}, ${labels[value]}`;
     }
 
-    const [overallScoreValue, setOverallScoreValue] = useState(2);
+    const [overallScoreValue, setOverallScoreValue] = useState(0);
     const [overallScoreHoverValue, setOverallScoreHoverValue] = useState(-1);
     const [comment, setComment] = useState("");
 
     return(
-        <Card sx={{ p: 5, mx: 5, width: "100%" }}>
+        <Card sx={{ p: 5, mx: 5 }}>
             <Typography variant="h3" align="center">
             Create Your Feedback:
             </Typography>
