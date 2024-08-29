@@ -72,8 +72,7 @@ const NewIngredientForm: React.FC<NewIngredientFormProps> = ({
                 })
                 setAutocompleteResults(filteredSearchList.map((food) => food.tag_name));
                 setCachedFoods(filteredSearchList);
-            })
-                .catch((error) => console.log(error))
+            }).catch((error) => console.log(error))
             // amsServer.get('/ingredients/search/'+newInputValue)
             //     .then((response) => console.log(response.data));
         }
