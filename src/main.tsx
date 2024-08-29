@@ -8,6 +8,7 @@ import Home from "./pages/home.tsx";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import theme from "./theme.ts";
 import NewPostForm from "./pages/newPostForm.tsx";
+import UserFeedbackForm from "./components/userFeedback/newUserFeedback/userFeedbackForm.tsx";
 import UserProfile from "./pages/userProfile.tsx";
 import RegisterForm from "./pages/register.tsx";
 import LoginForm from "./pages/login.tsx";
@@ -33,6 +34,8 @@ export default function App() {
               <Route path="search/:searchTerm" element={<SearchResults />} />
               <Route path="recipe/:recipeId" element={<FullRecipePage />} />
               <Route path="newpost" element={<NewPostForm />} />
+              <Route path="following" element={<TestBlock props={{num:1}} />} />
+              <Route path="createUserFeedback" element={<UserFeedbackForm/>} />
               <Route path="register" element={<RegisterForm/>} />
               <Route path="login" element={<LoginForm/>} />
               <Route path="following" element={<Following/>} />
