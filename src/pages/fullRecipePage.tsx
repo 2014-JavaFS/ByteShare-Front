@@ -9,8 +9,8 @@ import {
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import loggedInUserId from "../util/loggedInUserId";
-import IngredientList from "../components/ingredientList";
-import DisplayTagList from "../components/displayTagList";
+import IngredientList from "../components/IngredientList";
+import DisplayTagList from "../components/DisplayTagList";
 import DisplayRecipe from "../components/displayRecipe";
 import { bsServer } from "../common/byteshare-server";
 
