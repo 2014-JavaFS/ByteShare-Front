@@ -1,20 +1,12 @@
-import {
-  Button,
-  Card,
-  Divider,
-  Grid,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Button, Card, Divider, Grid, Stack, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import loggedInUserId from "../util/loggedInUserId";
 import IngredientList from "../components/IngredientList";
 import DisplayTagList from "../components/DisplayTagList";
 import DisplayRecipe from "../components/displayRecipe";
 import { bsServer } from "../common/byteshare-server";
-import UserFeedbackForm from "../components/userFeedback/newUserFeedback/userFeedbackForm";
 import UserFeedback from "../components/userFeedback/UserFeedback";
+import UserFeedbackForm from "../components/userFeedback/newUserFeedback/UserFeedbackForm";
 
 export default function FullRecipePage() {
   const { recipeId } = useParams();
@@ -59,8 +51,8 @@ export default function FullRecipePage() {
       getRecipe();
     },
     [] // when the page first loads
-  ); 
-  
+  );
+
   async function handleFollowClick() {
     setFollowed(true);
     //post request w/ current userId and author.userId
@@ -120,9 +112,11 @@ export default function FullRecipePage() {
           </Grid>
         </Grid>
       </Card>
-      <Stack> 
-          <UserFeedbackForm setFeedback={setFeedback} /> 
-          {feedback.map(userFeedback=><UserFeedback feedback={userFeedback} />)}
+      <Stack>
+        <UserFeedbackForm setFeedback={setFeedback} />
+        {feedback.map((userFeedback) => (
+          <UserFeedback feedback={userFeedback} />
+        ))}
       </Stack>
     </>
   );
