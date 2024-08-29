@@ -26,16 +26,17 @@ export default function App() {
             <Route path="/" element={<Layout />}>
               <Route index element={<Home />} />
               <Route path="users" element={<UserProfile />} />
-              <Route path="1" element={<TestBlock props={{num:1}} />} />
-              <Route path="2" element={<TestBlock props={{num:2}} />} />
-              <Route path="3" element={<TestBlock props={{num:3}} />} />
-              <Route path="4" element={<TestBlock props={{num:4}} />} />
+              <Route path="1" element={<TestBlock props={{ num: 1 }} />} />
+              <Route path="2" element={<TestBlock props={{ num: 2 }} />} />
+              <Route path="3" element={<TestBlock props={{ num: 3 }} />} />
+              <Route path="4" element={<TestBlock props={{ num: 4 }} />} />
               <Route path="search/:searchTerm" element={<SearchResults />} />
               <Route path="recipe/:recipeId" element={<FullRecipePage />} />
               <Route path="newpost" element={<NewPostForm />} />
-              <Route path="register" element={<RegisterForm/>} />
-              <Route path="login" element={<LoginForm/>} />
-              <Route path="following" element={<Following/>} />
+              <Route path="following" element={<Following />} />
+              <Route path="register" element={<RegisterForm />} />
+              <Route path="login" element={<LoginForm />} />
+              <Route path="following" element={<Following />} />
               <Route path="favorited" element={<Favorited />} />
             </Route>
           </Routes>

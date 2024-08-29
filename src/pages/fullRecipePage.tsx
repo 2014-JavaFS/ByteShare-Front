@@ -9,16 +9,19 @@ import {
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import loggedInUserId from "../util/loggedInUserId";
-import IngredientList from "../components/ingredientList"; 
+import IngredientList from "../components/IngredientList";
+import DisplayTagList from "../components/DisplayTagList";
 import DisplayRecipe from "../components/displayRecipe";
 import { bsServer } from "../common/byteshare-server";
 import DisplayTagList from "../components/displayTagList";
+import UserFeedbackForm from "../components/userFeedback/newUserFeedback/userFeedbackForm";
+import UserFeedback from "../components/userFeedback/UserFeedback";
 
 export default function FullRecipePage() {
   const { recipeId } = useParams();
   const [followed, setFollowed] = useState(false);
-
   const [favorited, setFavorited] = useState(false);
+  const [feedback, setFeedback] = useState([]);
 
   //really didnt wanna handle this here but im tired and cant think of a better way rn and this does at least work
   const [recipe, setRecipe] = useState({
@@ -118,8 +121,9 @@ export default function FullRecipePage() {
           </Grid>
         </Grid>
       </Card>
-      <Stack>
-        <Card sx={{ p: 5, m: 5, my: 1, width: "80vw" }}>Comment display?</Card>
+      <Stack> 
+          <UserFeedbackForm setFeedback={setFeedback} /> 
+          {feedback.map(userFeedback=><UserFeedback feedback={userFeedback} />)}
       </Stack>
     </>
   );
