@@ -32,6 +32,7 @@ export default function SearchResults() {
             setResults(response.data);
           } else {
             setError(response.data || "Not able to get user data");
+            console.log(error);
           }
         } catch (error) {
           console.log(error);
@@ -40,7 +41,7 @@ export default function SearchResults() {
       getRecipes();
     },
     [] // when the page first loads
-  ); 
+  );
 
   return (
     <List>
@@ -54,7 +55,9 @@ export default function SearchResults() {
                 <Grid container spacing={1}>
                   <Grid item xs={9}>
                     <Typography>By: {result.author.username} </Typography>
-                    <Typography>Posted: {result.date}</Typography>
+                    <Typography>
+                      Posted: {result.date.substring(0, 10)}
+                    </Typography>
                   </Grid>
                   <Grid item xs={3}>
                     <Typography>
