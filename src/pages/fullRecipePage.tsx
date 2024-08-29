@@ -1,11 +1,4 @@
-import {
-  Button,
-  Card,
-  Divider,
-  Grid,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Button, Card, Divider, Grid, Stack, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom"; 
 import IngredientList from "../components/IngredientList"; 
@@ -58,8 +51,8 @@ export default function FullRecipePage() {
       getRecipe();
     },
     [] // when the page first loads
-  ); 
-  
+  );
+
   async function handleFollowClick() {
     setFollowed(true);
     //post request w/ current userId and author.userId
@@ -119,9 +112,11 @@ export default function FullRecipePage() {
           </Grid>
         </Grid>
       </Card>
-      <Stack> 
-          <UserFeedbackForm setFeedback={setFeedback} /> 
-          {feedback.map(userFeedback=><UserFeedback feedback={userFeedback} />)}
+      <Stack>
+        <UserFeedbackForm setFeedback={setFeedback} />
+        {feedback.map((userFeedback) => (
+          <UserFeedback feedback={userFeedback} />
+        ))}
       </Stack>
     </>
   );
