@@ -1,4 +1,8 @@
-import { Grid, TextField, Button, Typography } from "@mui/material";
+import {
+  TextField,
+  Button,
+  Alert,
+} from "@mui/material";
 import { useState } from "react";
 
 export default function NewTextForm({ setRecipeText }) {
@@ -31,7 +35,6 @@ export default function NewTextForm({ setRecipeText }) {
   };
 
   return (
-    <Grid item xs={12}>
       <form autoComplete="off" onSubmit={handleSubmitText}>
         <TextField
           label="Title"
@@ -53,18 +56,22 @@ export default function NewTextForm({ setRecipeText }) {
           fullWidth
           sx={{ mb: 2 }}
         />
-        <Button type="submit" color="secondary" size="large" variant="outlined">
-          Save Title and Description
-        </Button>
-        <br />
-        {unsavedChanges ? (
-          <Typography variant="caption" color="secondary">
-            You have unsaved changes to your Title and/or Description!
-          </Typography>
-        ) : (
-          <></>
-        )}
+          <Button
+            type="submit"
+            color="secondary"
+            size="large"
+            variant="outlined"
+          >
+            Save Title and Description
+          </Button>
+
+          {unsavedChanges ? (
+            <Alert severity="warning" variant="filled" sx={{ m: 1 }}>
+              You have unsaved changes to your Title and/or Description!"
+            </Alert>
+          ) : (
+            <></>
+          )}
       </form>
-    </Grid>
   );
 }

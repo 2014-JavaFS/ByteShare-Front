@@ -9,6 +9,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import {
   Divider,
   Drawer,
@@ -16,15 +17,16 @@ import {
   Input,
   List,
   ListItemButton,
+  Stack,
   Tooltip,
 } from "@mui/material";
 import { NavLink, useNavigate } from "react-router-dom";
 import React from "react";
 import { useTheme } from "@mui/material/styles";
 import LoginIcon from "@mui/icons-material/Login";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 const badge = "🔫";
-const initLogin = false;
 
 export default function PrimarySearchAppBar() {
   //getting a navigate hook to go between routes
@@ -63,7 +65,7 @@ export default function PrimarySearchAppBar() {
             </ListItemButton>
             <Divider />
             {/*<ListItemButton onClick={() => logout()}>Logout</ListItemButton>*/}
-            <ListItemButton onClick={toggleLogin}>Logout</ListItemButton>
+            <ListItemButton onClick={handleLogoutClick}>Logout</ListItemButton>
           </List>
         </Box>
       </Drawer>
@@ -79,7 +81,7 @@ export default function PrimarySearchAppBar() {
   const Search = styled("div")(() => ({
     position: "relative",
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: "#FFFFFF22", 
+    backgroundColor: "#FFFFFF22",
     marginRight: theme.spacing(2),
     marginLeft: 0,
     [theme.breakpoints.up("xs")]: {
@@ -123,29 +125,20 @@ export default function PrimarySearchAppBar() {
   );
 
   function handleSearch(event) {
-    console.log("search input: " + event.target.value);
+    navigate("search/" + event.target.value);
   }
-
   //#endregion
 
   //#region usermenu
-
-  //state for determining if logged in
-  //FIXME: this should probably be handled differently, this was mostly a proof of concept
-  const [login, setLogin] = React.useState(initLogin);
-  function toggleLogin() {
-    setLogin(!login);
-  }
-  function handleLoginClick() {
-    //navigate("/login");
-    toggleLogin();
-    console.log("Login");
+  function handleLogoutClick() {
+    localStorage.clear();
+    navigate("/login");
   }
 
   //if logged out, only shows login button,
   //but if logged in, shows available options
-  const userMenu = login ? (
-    <Box>
+  const userMenu = localStorage.getItem("jwt") ? (
+    <Stack direction="row" spacing={1}>
       <Tooltip title={"Create New Post"} arrow>
         <IconButton
           onClick={() => {
@@ -160,19 +153,33 @@ export default function PrimarySearchAppBar() {
         <IconButton
           onClick={() => {
             navigate("/following");
+            location.reload();
           }}
           size="large"
-          sx={{ mx: 1 }}
         >
           <Badge badgeContent={badge} color="info">
             <MailIcon />
           </Badge>
         </IconButton>
       </Tooltip>
+      <Tooltip title={"Favorited"} arrow>
+        <IconButton
+          onClick={() => {
+            navigate("/favorited");
+            location.reload();
+          }}
+          size="large"
+          sx={{ mx: 1 }}
+        >
+          <Badge badgeContent={badge} color="info">
+            <FavoriteIcon />
+          </Badge>
+        </IconButton>
+      </Tooltip>
       <Tooltip title={"Profile"} arrow>
         <IconButton
           onClick={() => {
-            navigate("/profile");
+            navigate("/users");
           }}
           size="large"
           edge="end"
@@ -180,11 +187,16 @@ export default function PrimarySearchAppBar() {
           <AccountCircle />
         </IconButton>
       </Tooltip>
-    </Box>
+      <Tooltip title={"Logout"} arrow>
+        <IconButton onClick={handleLogoutClick} size="large" edge="end">
+          <LogoutIcon />
+        </IconButton>
+      </Tooltip>
+    </Stack>
   ) : (
     <Box>
       <Tooltip title={"Login"} arrow>
-        <IconButton onClick={handleLoginClick} edge="end" size="large">
+        <IconButton onClick={() => navigate("login")} edge="end" size="large">
           <LoginIcon />
         </IconButton>
       </Tooltip>
