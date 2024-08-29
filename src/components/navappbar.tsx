@@ -125,9 +125,8 @@ export default function PrimarySearchAppBar() {
   );
 
   function handleSearch(event) {
-    console.log("search input: " + event.target.value);
+    navigate("search/" + event.target.value);
   }
-
   //#endregion
 
   //#region usermenu
@@ -154,6 +153,7 @@ export default function PrimarySearchAppBar() {
         <IconButton
           onClick={() => {
             navigate("/following");
+            location.reload();
           }}
           size="large"
         >
@@ -170,6 +170,20 @@ export default function PrimarySearchAppBar() {
           sx={{ mx: 1 }}
         >
           <FavoriteIcon />
+        </IconButton>
+      </Tooltip>
+      <Tooltip title={"Favorited"} arrow>
+        <IconButton
+          onClick={() => {
+            navigate("/favorited");
+            location.reload();
+          }}
+          size="large"
+          sx={{ mx: 1 }}
+        >
+          <Badge badgeContent={badge} color="info">
+            <FavoriteIcon />
+          </Badge>
         </IconButton>
       </Tooltip>
       <Tooltip title={"Profile"} arrow>

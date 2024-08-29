@@ -1,41 +1,91 @@
-import { Button, Card, Divider, Grid, Stack, Typography } from "@mui/material";
-import { useState } from "react";
+import {
+  Button,
+  Card,
+  Divider,
+  Grid,
+  Stack,
+  Typography,
+} from "@mui/material";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import loggedInUserId from "../util/loggedInUserId";
-import DisplayTagList from "../components/testtagsdisplay";
+import IngredientList from "../components/IngredientList";
+import DisplayTagList from "../components/DisplayTagList";
+import DisplayRecipe from "../components/displayRecipe";
+import { bsServer } from "../common/byteshare-server";
+import UserFeedbackForm from "../components/userFeedback/newUserFeedback/userFeedbackForm";
+import UserFeedback from "../components/userFeedback/UserFeedback";
 
 export default function FullRecipePage() {
   const { recipeId } = useParams();
-  const [author, setAuthor] = useState(null);
-  const [title, setTitle] = useState("Title");
+  const [followed, setFollowed] = useState(false);
+  const [favorited, setFavorited] = useState(false);
+  const [feedback, setFeedback] = useState([]);
 
-  const loremIpsum =
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enimad minim veniam, quis nostrud exercitation ullamco laboris nisi utaliquip ex ea commodo consequat. Duis aute irure dolor inreprehenderit in voluptate velit esse cillum dolore eu fugiat nullapariatur. Excepteur sint occaecat cupidatat non proident, sunt inculpa qui officia deserunt mollit anim id est laborum.";
+  //really didnt wanna handle this here but im tired and cant think of a better way rn and this does at least work
+  const [recipe, setRecipe] = useState({
+    author: {
+      email: "",
+      password: "",
+      username: "",
+      first_name: "",
+      last_name: "",
+    },
+    content: "",
+    cookTime: 0,
+    date: "",
+    prepTime: 0,
+    recipeId: recipeId,
+    title: "",
+  });
 
-  function handleFollowClick() {
-    const currentUser = loggedInUserId();
+  useEffect(
+    () => {
+      async function getRecipe() {
+        try {
+          const response = await bsServer.get(`recipes/${recipeId}`);
+
+          if (response.status == 200) {
+            // navigate(`/${loggedInUserId()}`)
+            console.log(response);
+            setRecipe(response.data);
+          } else {
+            console.log("bad");
+          }
+        } catch (error: any) {
+          console.log(error);
+        }
+      }
+      getRecipe();
+    },
+    [] // when the page first loads
+  ); 
+  
+  async function handleFollowClick() {
+    setFollowed(true);
     //post request w/ current userId and author.userId
   }
   function handleFavoriteClick() {
-    const currentUser = loggedInUserId();
+    setFavorited(true);
     //post request w/ current userId and author.userId
   }
 
   return (
     <>
-      <Card sx={{ p: 5, m: 5, mb: 1, width: "80%" }}>
+      <Card sx={{ p: 5, m: 5, mb: 1, width: "80vw" }}>
         <Typography variant="h2" align="center">
-          Recipe Id: {recipeId} {title}
+          {recipe.title}
         </Typography>
         <Divider sx={{ m: 2 }} />
         <Stack direction="row" spacing={1}>
           <Typography alignSelf="center">
-            author.firstName author.lastName
+            {recipe.author.first_name} {recipe.author.last_name}
           </Typography>
 
           <Button
             color="secondary"
             variant="outlined"
+            disabled={followed}
             onClick={handleFollowClick}
           >
             Follow
@@ -44,6 +94,7 @@ export default function FullRecipePage() {
           <Button
             color="secondary"
             variant="outlined"
+            disabled={favorited}
             onClick={handleFavoriteClick}
           >
             Favorite
@@ -54,11 +105,9 @@ export default function FullRecipePage() {
 
         <Grid container spacing={2}>
           <Grid item xs={7}>
-            <b>RECIPE COMPONENT GO HERE</b> make sure to pass this the setTitle
-            and setAuthor functions to update states once axios response is
-            returned
+            <DisplayRecipe recipe={recipe} />
             <Divider sx={{ m: 2 }} />
-            <DisplayTagList recipeId={recipeId}/>
+            <DisplayTagList recipeId={recipeId} />
           </Grid>
 
           <Grid item xs={1}>
@@ -66,12 +115,14 @@ export default function FullRecipePage() {
           </Grid>
 
           <Grid item xs={4}>
-            <b>RECIPE INGREDIENT LIST COMPONENT GO HERE</b> <br /> {loremIpsum}
+            <Typography variant="h5">Ingredients:</Typography>
+            <IngredientList recipeId={recipeId} />
           </Grid>
         </Grid>
       </Card>
-      <Stack>
-        <Card sx={{ p: 5, m: 5, my: 1, width: "80%" }}>Comment display?</Card>
+      <Stack> 
+          <UserFeedbackForm setFeedback={setFeedback} /> 
+          {feedback.map(userFeedback=><UserFeedback feedback={userFeedback} />)}
       </Stack>
     </>
   );
