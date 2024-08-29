@@ -12,7 +12,7 @@ export default function Following() {
   const [following, setFollowing] = useState([]);
   const [followers, setFollowers] = useState([]);
   const [viewingFollowing, setViewingFollowing] = useState(false);
-  const [error, setError] = useState("");
+  const [, setError] = useState("");
 
   useEffect(
     () => {

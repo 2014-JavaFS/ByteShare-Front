@@ -13,7 +13,6 @@ import RegisterForm from "./pages/register.tsx";
 import LoginForm from "./pages/login.tsx";
 import Favorited from "./pages/favorited.tsx";
 import Following from "./pages/following.tsx";
-import Followers from "./pages/followers.tsx";
 import FullRecipePage from "./pages/fullRecipePage.tsx";
 
 export default function App() {
