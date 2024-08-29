@@ -22,7 +22,8 @@
 
     /* Configured (Anything beyond default) */
     "strictNullChecks": false,
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "allowSyntheticDefaultImports": true
   },
   "include": ["src"]
 }
