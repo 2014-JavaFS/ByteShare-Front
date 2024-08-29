@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { List, ListItem, ListItemText, Typography } from "@mui/material";
+import { List, ListItem, Typography } from "@mui/material";
 import { bsServer } from "../common/byteshare-server";
 
 export default function IngredientList({ recipeId }) {
   const [ingredients, setIngredients] = useState([]);
-  const [error, setError] = useState("");
+  const [, setError] = useState("");
 
   useEffect(
     () => {
