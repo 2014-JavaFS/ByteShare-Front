@@ -14,6 +14,7 @@ import NewPostTagForm from "../components/newPost/newTagForm.tsx";
 import NewPostIngredientList from "../components/newPost/newIngredientList.tsx";
 import NewPostTagList from "../components/newPost/newTagList.tsx";
 import { bsServer } from "../common/byteshare-server.ts";
+import loggedInUserId from "../util/loggedInUserId.ts";
 
 export default function NewPostForm() {
   const [recipeText, setRecipeText] = useState(null);
@@ -21,6 +22,7 @@ export default function NewPostForm() {
   const [tags, setTags] = useState([]);
   const [prepTime, setPrepTime] = useState("");
   const [cookTime, setCookTime] = useState("");
+  const [recipeId, setRecipeId] = useState();
 
   function optionalAlert(condition: boolean, statement: string) {
     if (condition) {
@@ -45,7 +47,7 @@ export default function NewPostForm() {
       return;
     }
 
-    if (!recipeText) console.log("===PROTO RECIPE INFO===");
+    console.log("===PROTO RECIPE INFO===");
     console.log("text:\n" + JSON.stringify(recipeText));
     console.log("ingredients:\n" + JSON.stringify(ingredients));
     console.log("tags:\n" + JSON.stringify(tags));
@@ -53,34 +55,83 @@ export default function NewPostForm() {
     console.log("cook time: " + cookTime);
     console.log("=======================");
 
-    //TODO : above this needs to be where the recipe is made and then the id is passed into makeTags()
+    makeRecipe();
+    makeRecipeIngredients();
     makeTags();
   }
 
-  async function makeTags(){
-    // TODO : hardcoding for now but eventually will need to pass in the created recipe id
-    const recipeId = 1;
-    //making the tagDTO list to be passed to the backend (tag DTO only has an Integer:recipeId and a String:tagName)
-    const tagDTOs = tags.map(tagName=>{
+  async function makeRecipe() {
+    const recipe = {
+      title: recipeText.title,
+      content: recipeText.description,
+      prepTime: prepTime,
+      cookTime: cookTime,
+      author: loggedInUserId(),
+    };
 
-      return {recipeId, tagName};
-      })
-      console.log(tagDTOs);
+    try {
+      const axResp = await bsServer.post(`/recipes`, { data: { recipe } });
+      console.log(axResp);
 
-    try{
-      const axResp = await bsServer.post("/tags/makeTags",tagDTOs);
-      console.log(axResp.headers);
-      console.log(axResp.status);
-      console.log(axResp.data);
-
-      if(axResp.status > 199 && axResp.status < 300){
-        //do something good
-      }else{
-        //do something bad
+      if (axResp.status > 199 && axResp.status < 300) {
+        console.log("✔️ Recipe");
+        setRecipeId(axResp.data.recipeId);
+      } else {
+        console.log("❌ Recipe");
       }
-    }catch(error){
+    } catch (error) {
       console.error(error);
-      console.error(status);
+    }
+  }
+
+  async function makeRecipeIngredients() {
+    //making the tagDTO list to be passed to the backend (tag DTO only has an Integer:recipeId and a String:tagName)
+    const recipeIngredientDTOs = [];
+
+    ingredients.map((ing) => {
+      {
+        recipeIngredientDTOs.push(
+          ing.ingredient,
+          recipeId,
+          ing.amount,
+          ing.unit
+        );
+      }
+    });
+    console.log(recipeIngredientDTOs);
+
+    try {
+      const axResp = await bsServer.post(`/recipeingredients/`,{data:{recipeIngredientDTOs}}); 
+      console.log(axResp);
+
+      if (axResp.status > 199 && axResp.status < 300) {
+        console.log("✔️ Ingredients");
+      } else {
+        console.log("❌ Ingredients");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async function makeTags() {
+    //making the tagDTO list to be passed to the backend (tag DTO only has an Integer:recipeId and a String:tagName)
+    const tagDTOs = tags.map((tagName) => {
+      return { recipeId, tagName };
+    });
+    console.log(tagDTOs);
+
+    try {
+      const axResp = await bsServer.post("/tags/makeTags", tagDTOs);
+      console.log(axResp);
+
+      if (axResp.status > 199 && axResp.status < 300) {
+        console.log("✔️ Tags");
+      } else {
+        console.log("❌ Tags");
+      }
+    } catch (error) {
+      console.error(error);
     }
   }
 
@@ -133,7 +184,10 @@ export default function NewPostForm() {
         <Divider sx={{ m: 1 }} />
 
         {optionalAlert(!recipeText, "You must add a Title and Description!")}
-        {optionalAlert(ingredients.length < 1, "You must add at least one ingredient!")}
+        {optionalAlert(
+          ingredients.length < 1,
+          "You must add at least one ingredient!"
+        )}
         {optionalAlert(tags.length < 1, "You must add at least one tag!")}
         {optionalAlert(!prepTime, "You must enter a Prep Time!")}
         {optionalAlert(!cookTime, "You must enter a Cook Time!")}

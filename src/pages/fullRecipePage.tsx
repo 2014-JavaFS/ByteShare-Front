@@ -9,10 +9,10 @@ import {
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import loggedInUserId from "../util/loggedInUserId";
-import IngredientList from "../components/ingredientList";
-import DisplayTagList from "../components/displayTagList";
+import IngredientList from "../components/ingredientList"; 
 import DisplayRecipe from "../components/displayRecipe";
 import { bsServer } from "../common/byteshare-server";
+import DisplayTagList from "../components/displayTagList";
 
 export default function FullRecipePage() {
   const { recipeId } = useParams();
