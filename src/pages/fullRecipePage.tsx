@@ -10,8 +10,8 @@ import {
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import loggedInUserId from "../util/loggedInUserId";
-import IngredientList from "../components/IngredientList";
-import DisplayTagList from "../components/DisplayTagList";
+import IngredientList from "../components/ingredientList";
+import DisplayTagList from "../components/displayTagList";
 
 export default function FullRecipePage() {
   const { recipeId } = useParams();

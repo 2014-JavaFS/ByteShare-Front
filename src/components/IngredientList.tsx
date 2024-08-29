@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { List, ListItem, ListItemText } from "@mui/material";
+import { List, ListItem, ListItemText, Typography } from "@mui/material";
 import { bsServer } from "../common/byteshare-server";
 
 export default function IngredientList({ recipeId }) {
@@ -11,6 +11,7 @@ export default function IngredientList({ recipeId }) {
       async function getRecipeIngredients() {
         try {
           const response = await bsServer.get(`/recipeingredients/${recipeId}`);
+          console.log(response);
 
           if (response.status == 200) {
             // navigate(`/${loggedInUserId()}`)
@@ -22,23 +23,17 @@ export default function IngredientList({ recipeId }) {
           console.log(error);
         }
       }
-      getRecipeIngredients();
-
-      setIngredients([
-        { id: 1, ingredientName: "can", quantity: 1, unit: "" },
-        { id: 2, ingredientName: "air", quantity: 5, unit: "grams" },
-      ]);
+      getRecipeIngredients(); 
     },
     [] // when the page first loads
   );
-
   return (
     <List>
       {ingredients.map((ingredient) => (
         <ListItem key={ingredient.id}>
-          <ListItemText
-            primary={`${ingredient.quantity} ${ingredient.unit} ${ingredient.ingredientName}`}
-          />
+          <Typography> 
+            {`${ingredient.quantity} ${ingredient.unit} ${ingredient.ingredientName}`}
+          </Typography>
         </ListItem>
       ))}
     </List>

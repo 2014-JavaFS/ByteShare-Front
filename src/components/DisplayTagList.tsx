@@ -10,10 +10,7 @@ export default function DisplayTagList({ recipeId }) {
       const int: string = recipeId;
 
       try {
-        const axResp = await bsServer.get("/tags/findTagNames/" + int);
-        console.log(axResp.headers);
-        console.log(axResp.status);
-        console.log(axResp.data);
+        const axResp = await bsServer.get("/tags/findTagNames/" + int); 
 
         if (axResp.status > 199 && axResp.status < 300) {
           setTagNames(axResp.data);
@@ -21,8 +18,7 @@ export default function DisplayTagList({ recipeId }) {
           //do something bad
         }
       } catch (error) {
-        console.error(error);
-        console.error(status);
+        console.error(error); 
       }
     }
     getTagNameArray();
