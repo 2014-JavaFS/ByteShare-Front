@@ -77,7 +77,7 @@ export default function Following() {
 
           <Typography variant="subtitle1" align="center">
             {viewingFollowing
-              ? `You are following ${followers.length} users`
+              ? `You are following ${following.length} users`
               : `You have ${followers.length} followers`}
           </Typography>
 
