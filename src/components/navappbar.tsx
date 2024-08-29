@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Badge from "@mui/material/Badge";
-import MenuIcon from "@mui/icons-material/Menu";
+//import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
@@ -12,11 +12,11 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import {
   Divider,
-  Drawer,
+  //Drawer,
   IconButton,
   Input,
-  List,
-  ListItemButton,
+  //List,
+  //ListItemButton,
   Stack,
   Tooltip,
 } from "@mui/material";
@@ -33,7 +33,7 @@ export default function PrimarySearchAppBar() {
   const navigate = useNavigate();
 
   //#region drawer
-  //state for menu drawer
+  /*//state for menu drawer
   const [drawerOpen, setDrawerOpen] = React.useState(false);
   function handleDrawerToggle() {
     setDrawerOpen(!drawerOpen);
@@ -64,13 +64,13 @@ export default function PrimarySearchAppBar() {
               Goto 4
             </ListItemButton>
             <Divider />
-            {/*<ListItemButton onClick={() => logout()}>Logout</ListItemButton>*/}
             <ListItemButton onClick={handleLogoutClick}>Logout</ListItemButton>
           </List>
         </Box>
       </Drawer>
     </Box>
   );
+  */
   //#endregion
 
   //#region searchbar
@@ -171,21 +171,7 @@ export default function PrimarySearchAppBar() {
         >
           <FavoriteIcon />
         </IconButton>
-      </Tooltip>
-      <Tooltip title={"Favorited"} arrow>
-        <IconButton
-          onClick={() => {
-            navigate("/favorited");
-            location.reload();
-          }}
-          size="large"
-          sx={{ mx: 1 }}
-        >
-          <Badge badgeContent={badge} color="info">
-            <FavoriteIcon />
-          </Badge>
-        </IconButton>
-      </Tooltip>
+      </Tooltip> 
       <Tooltip title={"Profile"} arrow>
         <IconButton
           onClick={() => {
@@ -247,13 +233,13 @@ export default function PrimarySearchAppBar() {
   return (
     <AppBar sx={{ py: 1 }}>
       <Toolbar>
-        {drawer}
-        <Divider
+        {/*drawer*/}
+        {/*<Divider
           orientation="vertical"
           variant="middle"
           sx={{ mx: 2 }}
           flexItem
-        />
+        />*/}
         {titleLink}
         {searchBar}
         <Divider
