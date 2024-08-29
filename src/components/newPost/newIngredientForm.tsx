@@ -26,6 +26,7 @@ const NewIngredientForm: React.FC<NewIngredientFormProps> = ({
     const [ingredient, setIngredient] = useState(null);
     const [inputVal, setInputVal] = useState("");
     const [autocompleteResults, setAutocompleteResults] = useState([]);
+    const [cachedFoods, setCachedFoods] = useState([]);
 
     const handleSubmitIngredient = (event) => {
         //default behavior reloads the whole page
@@ -49,12 +50,10 @@ const NewIngredientForm: React.FC<NewIngredientFormProps> = ({
         setUnit("quantity");
     };
 
-    const measurements = ["quantity", "grams", "cups", "tsp"];
-
     const handleIngredientSearch = (newInputValue) => {
         console.log("im looking for: " + newInputValue);
         if (newInputValue.length > 3) {
-            const response = axios({
+            axios({
                 url: 'https://trackapi.nutritionix.com/v2/search/instant?query=' + newInputValue,
                 method: 'GET',
                 headers: {
@@ -67,18 +66,39 @@ const NewIngredientForm: React.FC<NewIngredientFormProps> = ({
                 const tags = [];
                 const filteredSearchList = [];
                 searchList.forEach((food) => {
-                    if(!(tags.includes(food.tag_id))){
+                    if (!(tags.includes(food.tag_id))) {
                         tags.push(food.tag_id);
                         filteredSearchList.push(food);
                     }
                 })
                 setAutocompleteResults(filteredSearchList.map((food) => food.tag_name));
+                setCachedFoods(filteredSearchList);
             })
                 .catch((error) => console.log(error))
             // amsServer.get('/ingredients/search/'+newInputValue)
             //     .then((response) => console.log(response.data));
         }
         setInputVal(newInputValue);
+    };
+
+    const handleSelect = (newValue) => {
+        setIngredient(newValue);
+        let newUnit = "?"
+        cachedFoods.forEach((food) => {
+            console.log(food);
+            if (food.tag_name === newValue) {
+                console.log("Found food " + food.tag_name);
+                newUnit = food.serving_unit;
+            }
+        });
+        console.log("setting " + newUnit);
+        setUnit(newUnit);
+    };
+
+    const handleNewAmount = (event) => {
+        if(event.target.validity.valid || event.target.value === '') {
+            setAmount(event.target.value);
+        }
     };
 
     return (
@@ -94,7 +114,7 @@ const NewIngredientForm: React.FC<NewIngredientFormProps> = ({
                     <Autocomplete
                         value={ingredient}
                         onChange={(_event, newValue) => {
-                            setIngredient(newValue);
+                            handleSelect(newValue);
                         }}
                         inputValue={inputVal}
                         onInputChange={(_event, newInputValue) => {
@@ -115,7 +135,8 @@ const NewIngredientForm: React.FC<NewIngredientFormProps> = ({
                     <TextField
                         label="Amount"
                         value={amount}
-                        onChange={(e) => setAmount(e.target.value)}
+                        onChange={(e) => handleNewAmount(e)}
+                        inputProps={{pattern: "[0-9]*"}}
                         required
                         color="secondary"
                         sx={{width: "50%"}}
@@ -123,18 +144,12 @@ const NewIngredientForm: React.FC<NewIngredientFormProps> = ({
                     <TextField
                         label="measurement"
                         value={unit}
-                        onChange={(e) => setUnit(e.target.value)}
                         required
-                        select
-                        SelectProps={{native: true}}
+                        disabled={true}
                         color="secondary"
                         sx={{width: "40%"}}
                     >
-                        {measurements.map((option) => (
-                            <option key={option} value={option}>
-                                {option}
-                            </option>
-                        ))}
+
                     </TextField>
                     <Tooltip title={"Add Ingredient"} arrow>
                         <IconButton type="submit" size="small">
