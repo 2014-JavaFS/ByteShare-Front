@@ -101,7 +101,7 @@ export default function NewPostForm() {
     console.log(recipeIngredientDTOs);
 
     try {
-      const axResp = await bsServer.post(`/recipeingredients`, recipeIngredientDTOs); 
+      const axResp = await bsServer.post(`/recipeingredients`, recipeIngredientDTOs);
       console.log(axResp);
 
       if (axResp.status > 199 && axResp.status < 300) {
