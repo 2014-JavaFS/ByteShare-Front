@@ -15,7 +15,7 @@ export default function DisplayRecipe({ recipe }) {
       </Typography>
 
       <br />
-      <Typography>Posted {recipe.date.substring(0, 10)}</Typography>
+      <Typography>Posted {recipe.date === null ? "" : recipe.date.substring(0, 10)}</Typography>
 
       <Divider sx={{ m: 2 }} />
       <Typography>{recipe.content}</Typography>

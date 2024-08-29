@@ -54,7 +54,7 @@ export default function IngredientList({recipeId}) {
                     console.log(error);
                     alert("Problem retrieving macros from Nutritionix API");
                     setTotalMacros(zeroMacros);
-                });
+                }).finally(() => console.log('finally'));
         } else {
             setError(response.data || "Not able to get ingredient data");
         }
