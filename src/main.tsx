@@ -33,7 +33,7 @@ export default function App() {
               <Route path="newpost" element={<NewPostForm />} />
               <Route path="register" element={<RegisterForm/>} />
               <Route path="login" element={<LoginForm/>} />
-              <Route path="following" element={<Following props={{num:1}} />} />
+              <Route path="following" element={<Following/>} />
               <Route path="favorited" element={<Favorited />} />
             </Route>
           </Routes>

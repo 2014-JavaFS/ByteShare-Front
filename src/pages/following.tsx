@@ -1,156 +1,126 @@
-import { Typography, Card, Divider,Button } from "@mui/material";
-import axios from "axios";
-import React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
+import {
+  Typography,
+  Card,
+  Button,
+  Stack,
+} from "@mui/material";
+import { useEffect, useState } from "react";
 import { bsServer } from "../common/byteshare-server";
+import loggedInUserId from "../util/loggedInUserId";
 
-export default function following({ props }){
-    
-    const [checking, setChecking] = useState(null);
-    const [followers, setFollowers] = useState(0);
-    //TODO: Switch Out With Getting the Login Data or user data
-    const currentLogin:number = 2;
-    
+export default function Following() {
+  const [following, setFollowing] = useState([]);
+  const [followers, setFollowers] = useState([]);
+  const [viewingFollowing, setViewingFollowing] = useState(false);
+  const [error, setError] = useState("");
 
-    //Depreciated Code
-    /*
-    async function getFollowers(){
-        axios.get('http://localhost:8080/follow/following/user?userId='+currentLogin, {
-            responseType:"json",
-            headers: { 
-                'Accept': 'application/json'
-                //,'currentUserId': currentLogin.toString()
-              }
-            
-          })
-          .then((response) => {
-            //console.log(response.data);
-            setChecking(response);
-            setFollowers(response.data.length);
+  useEffect(
+    () => {
+      async function getFollowing() {
+        try {
+          const response = await bsServer.get(
+            `follow/following/user?userId=${loggedInUserId()}`
+          );
+          if (response.status == 200) {
+            setFollowing(response.data);
+          } else {
+            setError(response.data || "Not able to get follow data");
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+      getFollowing();
+    },
+    [] // when the page first loads
+  );
 
-            //console.log(response.data);
-          }, (error) => {
-            console.log("You Have an Error"+"\n"+error);
-          });
-    }  
-    */
+  useEffect(
+    () => {
+      async function getFollowers() {
+        try {
+          const response = await bsServer.get(
+            `follow/followers/user?userId=${loggedInUserId()}`
+          );
+          if (response.status == 200) {
+            setFollowers(response.data);
+          } else {
+            setError(response.data || "Not able to get follow data");
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+      getFollowers();
+    },
+    [] // when the page first loads
+  );
 
-
-    
-    async function getFollowersAmsServer(){
-        bsServer.get('/follow/followers/user?userId='+currentLogin,
-            {
-                responseType:"json",
-                headers: { 
-                    'Accept': 'application/json'
-                    
-                  }
-
-        }).then((response) => {
-            setChecking(response);
-            setFollowers(response.data.length);
-            //setFollowers(response.data.length);
-            //console.log(response.data);
-          }, (error) => {
-            console.log("You Have an Error"+"\n"+error);
-          });
+  //TODO: figure out why this doesnt update the page
+  async function handleUnfollow(followingId) {
+    try {
+      await bsServer.delete(`follow?followingId=${followingId}`, {
+        headers: { currentUserId: loggedInUserId() },
+      });
+    } catch (error) {
+      console.log(error);
     }
-    
-    //Depreciated Code
-    /*
-    async function getFollowerCount(){
-        axios.get('http://localhost:8080/follow/following/user?userId='+currentLogin, {
-            responseType:"json",
-            headers: { 
-                'Accept': 'application/json',
-                'currentUserId': currentLogin.toString()
-              }
-            
-          })
-          .then((response) => {
-            setFollowers(response.data.length);
-            //console.log(response.data);
-          }, (error) => {
-            console.log("You Have an Error"+"\n"+error);
-          });
-    }
-    */
+  }
 
-    async function getFollowerCountAmsServer(){
-        bsServer.get('/follow/following/user?userId='+currentLogin,
-            {
-                responseType:"json",
-                headers: { 
-                    'Accept': 'application/json'
-                    
-                  }
+  return (
+    <>
+      <Card sx={{ p: 2, mx: 5, width: "80vw" }}>
+        <Stack>
+          <Typography variant="h2" align="center">
+            {viewingFollowing ? "Following" : "Followers"}
+          </Typography>
 
-        }).then((response) => {
-            //setChecking(response);
-            setFollowers(response.data.length);
-            //setFollowers(response.data.length);
-            //console.log(response.data);
-          }, (error) => {
-            console.log("You Have an Error"+"\n"+error);
-          });
-    }
+          <Typography variant="subtitle1" align="center">
+            {viewingFollowing
+              ? `You are following ${followers.length} users`
+              : `You have ${followers.length} followers`}
+          </Typography>
 
-    
-    window.onload = function(){
-        //getFollowers();
-        //getFollowerCount();
-        getFollowersAmsServer();
-        //getFollowerCountAmsServer();
-    }
+          <Button
+            color="secondary"
+            variant="outlined"
+            onClick={() => setViewingFollowing(!viewingFollowing)}
+            sx={{ mr: 3, alignSelf: "center" }}
+          >
+            {viewingFollowing
+              ? `View your followers`
+              : `View who you're following`}
+          </Button>
+        </Stack>
+      </Card>
 
-    //The Waiting For Load To Occur/Load Fails screen
-    if(!checking) return (
-
-    <Card sx={{ p: 5, m: 5, width: "100%" }}>
-        <Typography variant="h2" align="center">
-          Followers Page
-        </Typography>
-
-        <Divider sx={{ my: 2 }} />
-
-        <Typography variant="body1" align="justify">
-            Waiting For Things To Load In, Or User has No Followers
-        </Typography>
- 
-    </Card> );
-
-    //Should Return 2 Cards Card 1 Will be The Follower Count With a Button To Refresh the number
-    //Card 2 Should be a list of all the Followers?
-    return (
-        <>
-            <Card sx={{ p: 5, m: 5, width: "100%" }}>
-                <Typography variant="h2" align="center">
-                Followers
-                </Typography>
-                <Typography variant="body1" align = "justify">
-                    <Button onClick={getFollowersAmsServer}>Update Followers</Button>
-                    <br></br>
-                    <br></br>
-
-                    {followers}
-                </Typography>
-
-            </Card> 
-
-            <Card sx={{ p: 5, m: 5, width: "100%" }}>
-                <Typography variant="h2" align="center">
-                Follower List
-                </Typography>
-                <Typography variant="body1" align = "justify">
-                    {checking.data.map((data) =>
-                        <Card sx={{ p: 5, m: 5, width: "100%" }}>
-                        <Typography>{data.following.username}</Typography></Card>
-                        ) 
-                    }
-                </Typography>
-
-            </Card> 
-        </>
-    );
+      {viewingFollowing ? (
+        <Stack sx={{ m: 5, my: 3 }} spacing={2}>
+          {following.map((following) => (
+            <Card key={following.follow_id} sx={{ p: 2, width: "80vw" }}>
+              <Typography>
+                <Button
+                  color="secondary"
+                  variant="outlined"
+                  onClick={() => handleUnfollow(following.following.userId)}
+                  sx={{ mr: 3 }}
+                >
+                  Unfollow
+                </Button>
+                {following.following.username}
+              </Typography>
+            </Card>
+          ))}
+        </Stack>
+      ) : (
+        <Stack sx={{ m: 5, my: 3 }} spacing={2}>
+          {followers.map((follower) => (
+            <Card key={follower.follow_id} sx={{ p: 2, width: "80vw" }}>
+              <Typography>{follower.follower.username}</Typography>
+            </Card>
+          ))}
+        </Stack>
+      )}
+    </>
+  );
 }
