@@ -9,6 +9,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import {
   Divider,
   Drawer,
@@ -153,11 +154,26 @@ export default function PrimarySearchAppBar() {
         <IconButton
           onClick={() => {
             navigate("/following");
+            location.reload();
           }}
           size="large"
         >
           <Badge badgeContent={badge} color="info">
             <MailIcon />
+          </Badge>
+        </IconButton>
+      </Tooltip>
+      <Tooltip title={"Favorited"} arrow>
+        <IconButton
+          onClick={() => {
+            navigate("/favorited");
+            location.reload();
+          }}
+          size="large"
+          sx={{ mx: 1 }}
+        >
+          <Badge badgeContent={badge} color="info">
+            <FavoriteIcon />
           </Badge>
         </IconButton>
       </Tooltip>
